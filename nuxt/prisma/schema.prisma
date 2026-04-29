@@ -9,5 +9,39 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
+}
+
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique @db.VarChar(255)
+  username  String
+  hashed_password  String
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+
+  review Review[]
+  image Image[]
+}
+
+model Review{
+  id Int @id @default(autoincrement())
+  productId Int
+  level Float
+  description String
+
+  product Product @relation(fields: [productId],references: [id])
+}
+
+model Image {
+  id Int @id @default(autoincrement())
+  productId Int
+  img_path String
+
+  product Product @relation(fields: [productId],references: [id])
 }
