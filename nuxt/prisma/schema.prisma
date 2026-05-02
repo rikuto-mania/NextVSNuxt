@@ -19,6 +19,8 @@ model User{
   hashed_password  String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  review Review[]
 }
 
 model Product {
@@ -35,12 +37,14 @@ model Product {
 model Review{
   id Int @id @default(autoincrement())
   productId Int
+  userId Int
   level Float
   description String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   product Product @relation(fields: [productId],references: [id])
+  user User @relation(fields: [userId],references: [id])
 }
 
 model Image {
