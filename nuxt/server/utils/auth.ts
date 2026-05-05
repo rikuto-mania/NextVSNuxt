@@ -4,13 +4,15 @@ import jwt from "jsonwebtoken"
 export const requireAuth = (event: any) =>{
     const token = getCookie(event,"token");
 
-    if(!token) return({statusCode:401,Message:"ログインがされていません"})
+    if(!token) throw createError({statusCode:401,statusMessage:"ログインがされていません"})
     
     try{        
-        const decoded = jwt.verify(token,process.env.JWT_SECRET!);
+        const decoded = jwt.verify(token,process.env.JWT_SECRET!) as {
+            userId :number
+        };
         return decoded
     }catch(error){
-        return ({statusCode:401,Message:"トークンが無効です"})
+        throw createError({statusCode:401,statusMessage:"トークンが無効です"})
     }
 
 }
