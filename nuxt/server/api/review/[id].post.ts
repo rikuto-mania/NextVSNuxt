@@ -9,11 +9,11 @@ export default defineEventHandler(async(event) =>{
         where: {id: userId}
     })
     
-    if(!user) throw createError({statusCode:404,statusMessage:"ユーザが見つかりません"})
+    if(!user) throw createError({statusCode:404,statusMessage:"ユーザが見つかりません"});
 
     const body = await readBody(event);
 
-    if (!body.description) throw createError({statusCode:400,statusMessage:"入力されていない項目があります"})
+    if (!body.description) throw createError({statusCode:400,statusMessage:"入力されていない項目があります"});
 
     try{
         const create = await prisma.review.create({
@@ -27,6 +27,6 @@ export default defineEventHandler(async(event) =>{
         
         return {statusCode:200,message:"レビューを投稿しました！",data:create}
     }catch(error){
-        throw createError({statusCode:500,statusMessage:"サーバーエラー"} )
+        throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
 })

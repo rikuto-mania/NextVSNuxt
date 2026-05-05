@@ -4,7 +4,7 @@ export default defineEventHandler(async(event) =>{
     const query = getQuery(event);
 
      const searchTerm = query.search as string;
-     const where = searchTerm ? { name: {contains : searchTerm} } : {}
+     const where = searchTerm ? { name: {contains : searchTerm} } : {};
 
      try{
         const searchProduct = await prisma.product.findMany({
@@ -16,6 +16,6 @@ export default defineEventHandler(async(event) =>{
 
         return searchProduct
      }catch(error){
-        return createError({statusCode:500,statusMessage:"サーバーエラー"})
+        throw createError({statusCode:500,statusMessage:"サーバーエラー"});
      }
 })

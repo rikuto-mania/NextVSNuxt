@@ -3,10 +3,7 @@ import {prisma} from "../../utils/prisma"
 export default defineEventHandler( async(event) => {
     const id = Number(getRouterParam(event,"id"));
 
-    if(!id){
-        throw createError({statusCode:404,statusMessage:"商品が見つかりませんでした。"})
-    }
-
+    if(!id) throw createError({statusCode:404,statusMessage:"商品が見つかりませんでした。"});
 
     try{
         const deleteProduct = await prisma.$transaction([
@@ -20,6 +17,6 @@ export default defineEventHandler( async(event) => {
 
         return deleteProduct
     }catch(error){
-        return createError({statusCode:500,statusMessage:"サーバーエラー"})
+        throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
 })

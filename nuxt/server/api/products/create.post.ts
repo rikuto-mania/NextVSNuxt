@@ -4,9 +4,7 @@ export default defineEventHandler(async(event) =>{
     const body = await readBody(event);
 
 
-    if(!body.name || !body.price){
-        throw createError({statusCode:400,statusMessage:"未入力の項目があります"});
-    }
+    if(!body.name || !body.price) throw createError({statusCode:400,statusMessage:"未入力の項目があります"});
 
     try{
         const create = await prisma.product.create({
@@ -23,6 +21,6 @@ export default defineEventHandler(async(event) =>{
 
         return create
     }catch(error){
-        return createError({statusCode:500,statusMessage:"サーバーエラー"})
+        throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
 })

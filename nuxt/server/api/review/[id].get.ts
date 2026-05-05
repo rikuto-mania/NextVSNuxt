@@ -12,6 +12,6 @@ export default defineEventHandler(async(event)=>{
 
         return reviews
     }catch(errorr){
-        return createError({statusCode:500,statusMessage:"サーバエラー"})
+        throw createError({statusCode:500,statusMessage:"サーバエラー"})
     }
 })

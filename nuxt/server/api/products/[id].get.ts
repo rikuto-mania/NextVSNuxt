@@ -1,11 +1,8 @@
 import { prisma } from "../../utils/prisma";
 
 export default defineEventHandler(async(event) =>{
-   const id = Number(getRouterParam(event,"id"));
-
-    if(!id){
-        throw createError({statusCode:404,statusMessage:"商品が見つかりませんでした。"})
-    }
+    const id = Number(getRouterParam(event,"id"));
+    if(!id) throw createError({statusCode:404,statusMessage:"商品が見つかりませんでした。"});
 
     try{
         const product = prisma.product.findUnique({
@@ -14,6 +11,6 @@ export default defineEventHandler(async(event) =>{
 
         return product
     }catch(error){
-        return createError({statusCode:500,statusMessage:"サーバーエラー"})
+        throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
 })

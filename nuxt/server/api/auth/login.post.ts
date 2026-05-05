@@ -7,24 +7,17 @@ export default defineEventHandler(async(event) =>{
     const body = await readBody<{email:string,password:string}>(event);
     const {email,password} = body || {};
     
-    if(!email || !password){
-        return ({statusCode:400,Message:"入力した項目が不正です"})
-    }
-
+    if(!email || !password) throw createError({statusCode:400,statusMessage:"入力した項目が不正です"});
+      
     try{
         const user = await prisma.user.findUnique({
              where : {email}
         })
 
-        if(!user){
-            return ({statusCode:401,Message:"ユーザーが見つかりましたでした"})        
-        }
+        if(!user) throw createError({statusCode:401,statusMessage:"ユーザーが見つかりましたでした"});        
 
         const isValid = await bcrypt.compare(password,user.hashed_password)
-
-        if(!isValid){
-            return ({statusCode:401,Message:"パスワードが間違っています"})        
-        }
+        if(!isValid) throw createError({statusCode:401,statusMessage:"パスワードが間違っています"});        
 
         const token = jwt.sign(
             {userId: user.id},
@@ -42,6 +35,6 @@ export default defineEventHandler(async(event) =>{
 
         return ({statusCode:200,Message:"ログイン完了",token:token})
     }catch(error){
-        throw error
+        throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
 })
