@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useProducts } from '#imports';
 
 //ダミー背景用カラー配列
 const slider = [
@@ -16,8 +17,7 @@ const next = () =>{
 const prev = () =>{
   current.value = (current.value -1 + slider.length) % slider.length;
 }
-
-
+const {data} = useProducts()
 
 </script>
 
@@ -51,12 +51,11 @@ const prev = () =>{
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
-          <ProductCard title="SMCS" :price=2000 :reviews=2 />
-          <ProductCard title="SMCS" :price=2000 :reviews=2 />
-          <ProductCard title="SMCS" :price=2000 :reviews=2 />
-          <ProductCard title="SMCS" :price=2000 :reviews=2 />
-          <ProductCard title="SMCS" :price=2000 :reviews=2 />
-          <ProductCard title="SMCS" :price=2000 :reviews=2 />
+          <ProductCard
+          v-for="products in data"
+          :to="`/${products.id}`"
+          :title="products.name"
+          :price=products.price :reviews=2 />
         </div>
 
         <div class="flex justify-center"> 
