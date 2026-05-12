@@ -11,10 +11,10 @@ interface Products{
 }
 
 export function useProduct(id? :number){
-  return useApi<Products>("products/${id}");
+  return useApi<Products>(`/products/${id}`);
 }
 
 export function useProducts(id? :number){
-  return useApi<Products[]>("products");
+  return useApi<Products[]>("/products");
 }
 
