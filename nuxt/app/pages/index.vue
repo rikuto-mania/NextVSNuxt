@@ -53,6 +53,7 @@ const {data} = useProducts()
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
           <ProductCard
           v-for="products in data"
+          :to="`/${products.id}`"
           :title="products.name"
           :price=products.price :reviews=2 />
         </div>
