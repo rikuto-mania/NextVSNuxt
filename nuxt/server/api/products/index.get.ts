@@ -20,7 +20,24 @@ export default defineEventHandler(async(event) =>{
             }
         })
 
-        return searchProduct
+        const reviewAvg = await prisma.review.groupBy({
+            by:["productId"],
+            _avg:{
+                level:true
+            },
+        })
+
+        const result = searchProduct.map(product =>{
+            const rating =  reviewAvg.find(
+                r => r.productId === product.id
+            )
+
+
+            return{...product,avg_level: rating?._avg.level}
+        })
+
+        return result
+
      }catch(error){
         throw createError({statusCode:500,statusMessage:"サーバーエラー"});
      }
