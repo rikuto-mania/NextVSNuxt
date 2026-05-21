@@ -7,6 +7,9 @@ export default defineEventHandler( async(event) => {
 
     try{
         const deleteProduct = await prisma.$transaction([
+            prisma.review.deleteMany({
+                where: {productId:id}
+            }),
             prisma.image.deleteMany({
                 where: { productId:id },
             }),
@@ -15,7 +18,7 @@ export default defineEventHandler( async(event) => {
             })
         ])
 
-        return deleteProduct
+        return {statusCode:200,message:"商品を削除しました"}
     }catch(error){
         throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }

@@ -5,8 +5,14 @@ export default defineEventHandler(async(event) =>{
     if(!id) throw createError({statusCode:404,statusMessage:"商品が見つかりませんでした。"});
 
     try{
-        const product = prisma.product.findUnique({
-            where: { id }
+        const product = await prisma.product.findUnique({
+            where: { id },
+            include:{
+                _count:{
+                    select:{review:true}
+                },
+                image:true
+            }
         }); 
 
         return product

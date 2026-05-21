@@ -11,6 +11,12 @@ export default defineEventHandler(async(event) =>{
             where: where,
             orderBy:{
                 created_at: "desc"
+            },
+            include:{
+                _count:{
+                    select:{review:true}
+                },
+                image:true
             }
         })
 
