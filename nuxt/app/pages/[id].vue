@@ -3,8 +3,8 @@ const pieces = Array.from({length: 99},(_,i) => i +1)
 const route = useRoute();
 const id = Number(route.params.id);
 
-const {data:productData,error:productError} = useFetch(`/api/products/${id}`)
-const {reviewdata,reviewCount} = useReview(id);
+const {data:productData} = useFetch(`/api/products/${id}`)
+const {reviewdata} = useReview(id);
 
 
 </script>
@@ -45,7 +45,7 @@ const {reviewdata,reviewCount} = useReview(id);
         <section class="px-4 xl:px-11 py-10">
             <div class="pb-8 flex gap-2">
                 <div class="bg-[#FF6A33] w-1 h-auto"></div>
-                <p class="text-3xl">{{reviewCount(id)}}<span>件のレビュー</span></p>
+                <p class="text-3xl">{{productData?._count.review}}<span>件のレビュー</span></p>
             </div>
             <hr class="border border-[#BBB7B7]"> 
         
