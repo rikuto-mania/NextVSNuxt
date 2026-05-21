@@ -19,7 +19,7 @@ export default defineEventHandler(async(event) =>{
             }
         })
 
-        return create
+        return {statusCode:201,message:"商品情報を追加しました！",data:create}
     }catch(error){
         throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
