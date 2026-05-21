@@ -17,7 +17,8 @@ const next = () =>{
 const prev = () =>{
   current.value = (current.value -1 + slider.length) % slider.length;
 }
-const {data} = useProducts()
+
+const {data,error} = useFetch("/api/products")
 
 </script>
 
@@ -51,11 +52,13 @@ const {data} = useProducts()
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
+          
           <ProductCard
           v-for="products in data"
           :to="`/${products.id}`"
           :title="products.name"
-          :price=products.price :reviews=2 />
+          :price="products.price" 
+          :reviews="products._count.review" />
         </div>
 
         <div class="flex justify-center"> 

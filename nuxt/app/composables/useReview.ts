@@ -9,5 +9,6 @@ interface Review{
 }
 
 export const useReview = (id? :number) =>{
-   return useApi<Review[]>(`/review/${id}`)
+    const {data:reviewdata} = useFetch<Review[]>(`/api/review/${id}`);
+    return {reviewdata}
 }
