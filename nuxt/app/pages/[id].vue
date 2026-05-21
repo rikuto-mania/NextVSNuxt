@@ -3,8 +3,9 @@ const pieces = Array.from({length: 99},(_,i) => i +1)
 const route = useRoute();
 const id = Number(route.params.id);
 
-const {data:productData,error:productError} = useProduct(id);
-const {data:reviewData} = await useReview(id);
+const {data:productData} = useFetch(`/api/products/${id}`)
+const {reviewdata} = useReview(id);
+
 
 </script>
 
@@ -44,16 +45,22 @@ const {data:reviewData} = await useReview(id);
         <section class="px-4 xl:px-11 py-10">
             <div class="pb-8 flex gap-2">
                 <div class="bg-[#FF6A33] w-1 h-auto"></div>
-                <p class="text-3xl">レビュー</p>
+                <p class="text-3xl">{{productData?._count.review}}<span>件のレビュー</span></p>
             </div>
             <hr class="border border-[#BBB7B7]"> 
-            <div v-for="reviews in reviewData">
+        
+            <div  v-for="reviews in reviewdata">
                 <div class="py-4">
                     <!-- <p>{{reviews.userId}}</p> -->
                     <p class="text-yellow-400 pr-1.5">★★★★★</p>
                     <p>{{reviews.description}}</p>
                 </div>
                 <hr class="border-b border-[#BBB7B7]">
+            </div>
+            <div v-if="reviewdata" class="flex flex-col justify-center items-center">
+                <p class="text-center py-6">レビューがまだありません...</p>
+                 <button class="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33]">レビューを投稿する</button>
+                
             </div>
         </section>
 </template>
