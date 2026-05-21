@@ -1,0 +1,19 @@
+interface ProductCardProps{
+    image?:string;
+    title:string;
+    price:number;
+    reviews:number;
+}
+
+export const ProductCard = ({image,title,price,reviews}:ProductCardProps) =>{
+    return (
+       <div>
+            <div className="bg-[#F2F1F1] w-60 h-60 rounded-2xl"></div>
+            <p className="text-2xl font-medium py-3">{title}</p>
+            <p className="font-bold">¥<span className="pl-1.5 text-[#FF6A33]">{price}</span></p>
+            <p><span className="text-yellow-400 pr-1.5">★★★★★</span>({reviews})</p>
+        </div>
+    );
+}
+
+export default ProductCard;
