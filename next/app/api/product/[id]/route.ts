@@ -1,0 +1,78 @@
+import { prisma } from "@/lib/prisma"
+import { NextRequest, NextResponse } from "next/server"
+
+//商品IDに基づいて特定の商品を取得、更新、削除するAPIエンドポイント
+
+//商品情報取得
+export async function GET(req:NextRequest,context:{params: Promise<{id:string}>}) {
+    const { id } = await context.params;
+    const productid = Number(id);
+
+    if (!productid) return NextResponse.json({statusCode:404,message:"商品が見つかりませんでした"});
+    try{
+        const item =await prisma.product.findUnique({
+            where: {id:productid},
+            include:{
+                _count:{
+                    select:{Review:true}
+                },
+                Image:true,
+            }
+        })
+
+        return NextResponse.json({statusCode:200,message:"商品の取得に成功しました",data:item});
+    }catch(error){
+        return NextResponse.json({statusCode:500,message:"サーバーエラー" , error: error instanceof Error ? error.message : String(error)});
+    }
+}
+
+//商品情報更新
+export async function PUT(req:NextRequest,context:{params : Promise<{id:number}>}){
+    const {id} = await context.params;
+    const body = await req.json();
+    const productId = Number(id);
+    if (!productId) return NextResponse.json({statusCode:404,message:"商品が見つかりませんでした"});
+
+    try{
+        const updateProduct = await prisma.product.update({
+            where: { id:productId },
+            data:{
+                name:body.name,
+                price:body.price,
+                Image: {
+                    create: body.Image.map((img_path:string) => ({ img_path }))
+                }
+            }
+        })
+
+        return NextResponse.json({statusCode:200,message:"商品の更新に成功しました"});
+    }catch(error){
+        return NextResponse.json({statusCode:500,message:"サーバーエラー", error: error instanceof Error ? error.message : String(error)});
+    }
+}
+
+
+//商品情報削除
+export async function DELETE(req:NextRequest,context:{params: Promise<{id:string}>}) {
+    const {id} = await context.params;
+
+    const productId = Number(id);
+
+    try{
+        const deletePriduct = await prisma.$transaction([
+            prisma.image.deleteMany({
+                where: {productId}
+            }),
+            prisma.review.deleteMany({
+                where:{productId}
+            }),
+            prisma.product.delete({
+                where:{id:productId}
+            })
+        ])
+        return NextResponse.json({statusCode:200,message:"商品の削除に成功しました"});
+    }catch(error){
+         return NextResponse.json({statusCode:500,message:"サーバーエラー", error: error instanceof Error ? error.message : String(error)});
+    }
+        
+}
