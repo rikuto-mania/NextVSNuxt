@@ -21,8 +21,8 @@ export async function GET(req:NextRequest) {
          });
 
         
-        return NextResponse.json({statusCode:200,message:"商品の取得に成功しました",data:item})
+        return NextResponse.json({status:"success",code:200,data:item},{status:200})
     }catch(error){
-        return NextResponse.json({statusCode:500,message:"サーバーエラーが発生しました",error:error})
+        return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました"},{status:500})
     }
 }

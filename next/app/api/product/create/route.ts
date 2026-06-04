@@ -5,7 +5,7 @@ import {prisma} from "@/lib/prisma";
 export async function POST(req:NextRequest) {
     const body =  await req.json();
    
-    if(!body.name || !body.price) return NextResponse.json({statusCode:400,message:"商品名と価格は必須です"});
+    if(!body.name || !body.price) return NextResponse.json({status:"error",code:400,message:"入力内容に不備があります"},{status:400});
     
     console.log("受け取ったbodyの中身:", body);
     try{
@@ -20,11 +20,8 @@ export async function POST(req:NextRequest) {
         });
 
         
-        return NextResponse.json({statusCode:201,message:"商品の作成に成功しました",data:createProduct})
+        return NextResponse.json({status:"success",code:201,data:createProduct},{status:201})
     }catch(error){
-        return NextResponse.json({
-            statusCode:500,message:"サーバーエラーが発生しました",
-            error: error instanceof Error ? error.message : String(error)
-        })
+        return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました"},{status:500})
     }
 }

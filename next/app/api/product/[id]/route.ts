@@ -8,7 +8,7 @@ export async function GET(req:NextRequest,context:{params: Promise<{id:string}>}
     const { id } = await context.params;
     const productid = Number(id);
 
-    if (!productid) return NextResponse.json({statusCode:404,message:"商品が見つかりませんでした"});
+    if (!productid) return NextResponse.json({status:"error",code:404,message:"商品がみつかりませんでした"},{status:404});
     try{
         const item =await prisma.product.findUnique({
             where: {id:productid},
@@ -20,9 +20,9 @@ export async function GET(req:NextRequest,context:{params: Promise<{id:string}>}
             }
         })
 
-        return NextResponse.json({statusCode:200,message:"商品の取得に成功しました",data:item});
+        return NextResponse.json({status:"success",code:200,data:item},{status:200});
     }catch(error){
-        return NextResponse.json({statusCode:500,message:"サーバーエラー" , error: error instanceof Error ? error.message : String(error)});
+        return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました"},{status:500});
     }
 }
 
@@ -31,7 +31,7 @@ export async function PUT(req:NextRequest,context:{params : Promise<{id:number}>
     const {id} = await context.params;
     const body = await req.json();
     const productId = Number(id);
-    if (!productId) return NextResponse.json({statusCode:404,message:"商品が見つかりませんでした"});
+    if (!productId) return NextResponse.json({status:"error",code:404,message:"商品がみつかりませんでした"},{status:404});
 
     try{
         const updateProduct = await prisma.product.update({
@@ -45,9 +45,9 @@ export async function PUT(req:NextRequest,context:{params : Promise<{id:number}>
             }
         })
 
-        return NextResponse.json({statusCode:200,message:"商品の更新に成功しました"});
+        return NextResponse.json({status:"success",code:200,message:"商品の情報を更新しました"},{status:200});
     }catch(error){
-        return NextResponse.json({statusCode:500,message:"サーバーエラー", error: error instanceof Error ? error.message : String(error)});
+        return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました"},{status:500});
     }
 }
 
@@ -55,10 +55,11 @@ export async function PUT(req:NextRequest,context:{params : Promise<{id:number}>
 //商品情報削除
 export async function DELETE(req:NextRequest,context:{params: Promise<{id:string}>}) {
     const {id} = await context.params;
-
     const productId = Number(id);
 
     try{
+        if(!productId) return NextResponse.json({status:"error",code:404,message:"商品がみつかりませんでした"},{status:404})
+
         const deletePriduct = await prisma.$transaction([
             prisma.image.deleteMany({
                 where: {productId}
@@ -70,9 +71,9 @@ export async function DELETE(req:NextRequest,context:{params: Promise<{id:string
                 where:{id:productId}
             })
         ])
-        return NextResponse.json({statusCode:200,message:"商品の削除に成功しました"});
+        return NextResponse.json({status:"success",code:200,message:"商品を削除しました"},{status:200});
     }catch(error){
-         return NextResponse.json({statusCode:500,message:"サーバーエラー", error: error instanceof Error ? error.message : String(error)});
+         return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました"},{status:500});
     }
         
 }
