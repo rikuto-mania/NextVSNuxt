@@ -4,27 +4,31 @@ import {useState} from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import useApi from "@/hooks/useApi";
+import useProducts from "@/hooks/useProducts";
 
-export default function Home() {
-  //ダミー背景用カラー配列
+//ダミー背景用カラー配列
   const slider = [
     'from-[#FF6A33] to-[#FFD900]',
     'from-[#3d9fb5] to-[#FFD900]',
     'from-[#FBA233] to-[#FFD900]',
   ];
 
+export default function Home() {
+  //カルーセル状態管理
+  const [current,setCurrent] = useState(0);
+  
+  //カルーセルを次の画像へ変更
   const next = () =>{
     setCurrent((current + 1) % slider.length);
   }
-
+   //カルーセルを前の画像へ変更
   const prev = () =>{
     setCurrent((current - 1 + slider.length) % slider.length);
   }
 
-
-
-  const [current,setCurrent] = useState(0);
-
+  //useProduct使用
+  const {data:productsData} = useProducts();
 
   return (
     <main>
@@ -59,12 +63,11 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
-          <ProductCard title="SMCS" price={2000} reviews={2} />
-          <ProductCard title="SMCS" price={2000} reviews={2} />
-          <ProductCard title="SMCS" price={2000} reviews={2} />
-          <ProductCard title="SMCS" price={2000} reviews={2} />
-          <ProductCard title="SMCS" price={2000} reviews={2} />
-          <ProductCard title="SMCS" price={2000} reviews={2} />
+          {productsData?.data.slice(0,7).map((product) =>{
+            return(
+              <ProductCard key={product.name} title={product.name} price={product.price} reviews={product._count.Review} />
+            )
+          })}
         </div>
 
         <div className="flex justify-center"> 
