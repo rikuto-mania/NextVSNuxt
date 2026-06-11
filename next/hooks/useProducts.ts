@@ -12,6 +12,7 @@ interface products{
     price:number;
     Image?:string[];
     _count:count;
+    avgLevel:Float16Array;
     created_at:Date;
     updated_at:Date;
 }
