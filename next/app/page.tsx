@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import useApi from "@/hooks/useApi";
 import useProducts from "@/hooks/useProducts";
-
 //ダミー背景用カラー配列
   const slider = [
     'from-[#FF6A33] to-[#FFD900]',
@@ -17,7 +16,7 @@ import useProducts from "@/hooks/useProducts";
 export default function Home() {
   //カルーセル状態管理
   const [current,setCurrent] = useState(0);
-  
+
   //カルーセルを次の画像へ変更
   const next = () =>{
     setCurrent((current + 1) % slider.length);
@@ -65,8 +64,10 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
           {productsData?.data.slice(0,7).map((product) =>{
             return(
-              <ProductCard key={product.name} title={product.name} price={product.price} reviews={product._count.Review} />
-            )
+              <Link key={product.name} href={`products/${product.id}`}>
+                   <ProductCard title={product.name} price={product.price} reviews={product._count.Review} />
+              </Link>
+               )
           })}
         </div>
 
