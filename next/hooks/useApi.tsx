@@ -37,6 +37,7 @@ export const useApi =<T,D = unknown>(
 
                 const response = await fetch(url,{
                     method,
+                    body: method !== "GET" && requestData?JSON.stringify(requestData) : undefined,
                     headers:{
                         "Content-Type":"application/json",
                         ...(requireAuth && token ? {"Authorization": `Bearer ${token}`} : {})
@@ -55,7 +56,7 @@ export const useApi =<T,D = unknown>(
                 setData (result as unknown as T);
                 return result;
             }catch(err){
-                const errorMessage = err instanceof Error ? err.message: await getErrorMessage(err)
+                const errorMessage = err instanceof Error ? err.message: await getErrorMessage(err);
                 setError(errorMessage);
                 throw err;
             }finally{
@@ -74,10 +75,12 @@ export const useApi =<T,D = unknown>(
         if(response){
             let errorData: unknown;
 
+
+            const rawText =  await response.text();
             try{
                 errorData = await response.json();
             }catch(error){
-                errorData = await response.text();
+                errorData = rawText;
             }
             
             console.error(`サーバーレスポンス：`,errorData);
