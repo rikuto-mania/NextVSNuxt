@@ -4,6 +4,10 @@ import TextInput from "@/components/textInput";
 import { SubmitButton } from "@/components/submitButton";
 import useApi from "@/hooks/useApi";
 
+interface DialogProps{
+    onClose:() => void;
+}
+
 interface FormData{
     email:string;
     username:string;
@@ -19,7 +23,7 @@ interface Error{
 }
 
 
-export const LoginDialog = () =>{
+export const LoginDialog = ({onClose}:DialogProps) =>{
     const [isLoginMode,setIsLoginMode] = useState(true);
     const [formData,setFormData] = useState<FormData>({
         email:"",
@@ -74,7 +78,9 @@ export const LoginDialog = () =>{
                 return;
             }
 
-            if(isLoginMode) toggleMenu;
+            
+           isLoginMode ? onClose() : setIsLoginMode(!isLoginMode);
+            
         }
     }
 
