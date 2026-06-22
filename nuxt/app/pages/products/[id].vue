@@ -51,8 +51,8 @@ watchEffect(() =>{
         </div>
     </section>
 
-    <section class="px-4 xl:px-11 py-10">
-        <div v-if="reviewdata" class="pb-8 flex gap-2">
+    <section v-if="reviewdata" class="px-4 xl:px-11 py-10">
+        <div  class="pb-8 flex gap-2">
             <div class="bg-[#FF6A33] w-1 h-auto"></div>
             <p class="text-3xl">{{reviewdata.length}}<span>件のレビュー</span></p>
         </div>
@@ -66,7 +66,7 @@ watchEffect(() =>{
             </div>
             <hr class="border-b border-[#BBB7B7]">
         </div>
-        <div v-if="!reviewdata" class="flex flex-col justify-center items-center">
+        <div v-if="reviewdata.length === 0" class="flex flex-col justify-center items-center">
             <p class="text-center py-6">レビューがまだありません...</p>
             <button class="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33]">レビューを投稿する</button>
         </div>
