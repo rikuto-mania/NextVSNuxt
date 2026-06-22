@@ -75,10 +75,10 @@ export async function DELETE(req:NextRequest,context:{params: Promise<{id:string
 
         const deletePriduct = await prisma.$transaction([
             prisma.image.deleteMany({
-                where: {productId}
+                where: {productId:productId}
             }),
             prisma.review.deleteMany({
-                where:{productId}
+                where:{productId:productId}
             }),
             prisma.product.delete({
                 where:{id:productId}

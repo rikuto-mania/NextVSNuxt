@@ -10,12 +10,21 @@ interface products{
     id:number;
     name:string;
     price:number;
-    Image?:string[];
+    Image:Image[];
     _count:count;
     avgLevel:Float16Array;
     created_at:Date;
     updated_at:Date;
 }
+
+interface Image{
+    id:number,
+    productId: number;
+    img_path: string;
+    created_at:Date;
+    updated_at: Date;
+}
+
 
 interface count{
     Review:number
