@@ -20,13 +20,14 @@ export default function Products(){
     const end = start + ITEM_PER_PAGE; //最後ののページ
     const totalPage = (productsData?.data.length / ITEM_PER_PAGE);　//総ページ数
 
+
     return(
         <main className="max-w-5xl px-4 py-16 mx-auto">
             <section className="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-4 ">
                 {productsData?.data.slice(start,end).map((product) =>{
                     return(
                         <Link key={product.name} href={`products/${product.id}`}>
-                            <ProductCard title={product.name} price={product.price} reviews={product._count.Review} />
+                            <ProductCard title={product.name} price={product.price} reviews={product._count.Review} image={product.Image[0].img_path} />
                         </Link>
                     )
                 })}
