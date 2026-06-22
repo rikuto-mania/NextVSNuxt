@@ -4,8 +4,9 @@ import {useState} from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import useApi from "@/hooks/useApi";
 import useProducts from "@/hooks/useProducts";
+
+
 //ダミー背景用カラー配列
   const slider = [
     'from-[#FF6A33] to-[#FFD900]',
@@ -65,7 +66,7 @@ export default function Home() {
           {productsData?.data.slice(0,7).map((product) =>{
             return(
               <Link key={product.name} href={`products/${product.id}`}>
-                   <ProductCard title={product.name} price={product.price} reviews={product._count.Review} />
+                   <ProductCard title={product.name} price={product.price} reviews={product._count.Review} image={product.Image[0].img_path} />
               </Link>
                )
           })}
@@ -75,6 +76,10 @@ export default function Home() {
           <Link href="/products" className="text-white text-center bg-[#FF6A33] px-8 py-2.5">もっと見る</Link>
         </div>
       </section>
+
+
+
+
       </div>
     </main>
   );
