@@ -55,8 +55,9 @@ const {data,error} = useFetch("/api/products")
           
           <ProductCard
           v-for="products in data"
-          :to="`/${products.id}`"
+          :to="`/products/${products.id}`"
           :title="products.name"
+          :image="products.image[0]?.img_path"
           :price="products.price" 
           :reviews="products._count.review" />
         </div>
