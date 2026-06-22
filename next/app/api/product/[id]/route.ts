@@ -53,6 +53,7 @@ export async function PUT(req:NextRequest,context:{params : Promise<{id:number}>
                 name:body.name,
                 price:body.price,
                 Image: {
+                    deleteMany:{},
                     create: body.Image.map((img_path:string) => ({ img_path }))
                 }
             }
@@ -60,7 +61,7 @@ export async function PUT(req:NextRequest,context:{params : Promise<{id:number}>
 
         return NextResponse.json({status:"success",code:200,message:"商品の情報を更新しました"},{status:200});
     }catch(error){
-        return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました"},{status:500});
+        return NextResponse.json({status:"error",code:500,message:"サーバーエラーが発生しました",error: error instanceof Error ? error.message : String(error)},{status:500});
     }
 }
 
