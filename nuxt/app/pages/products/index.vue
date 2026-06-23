@@ -8,12 +8,12 @@ const ITEM_PRE_PAGE = 24;
 
 //初めのページ
 const start = computed(() =>{
-    return currentPage.value = (currentPage.value -1) * ITEM_PRE_PAGE;
+    return (currentPage.value -1) * ITEM_PRE_PAGE;
 });
 
 //最後のページ
 const end = computed(() =>{
-    return currentPage.value = currentPage.value / ITEM_PRE_PAGE;
+    return start.value + ITEM_PRE_PAGE;
 });
 
 //合計ページ
