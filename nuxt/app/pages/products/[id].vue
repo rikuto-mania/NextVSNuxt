@@ -27,7 +27,7 @@ watchEffect(() =>{
             </div>
             <div class="flex flex-col md:flex-row">
                 <div  class="flex justify-center items-center w-full h-100 md:w-100 md:h-100 bg-[#F2F1F1]">
-                    <NuxtImg v-if="productData.image" :src="`/products/${currentImage}`" width="360" class="h-auto"/>
+                    <NuxtImg v-if="productData?.image && currentImage" :src="`/products/${currentImage}`" width="360" class="h-auto"/>
                 </div>
                 <div class="md:pl-9 py-3">
                     <p class="text-4xl">{{productData.name}}</p>
