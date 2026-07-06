@@ -58,7 +58,7 @@ model Cart {
   userId     Int?
   sessionId  String?
   created_at DateTime    @default(now())
-  updated_at DateTime
+  updated_at DateTime  @updatedAt
   Cart_item  Cart_item[]
 }
 
@@ -68,7 +68,7 @@ model Cart_item {
   productId  Int
   quantity   Int
   created_at DateTime @default(now())
-  updated_at DateTime
+  updated_at DateTime @updatedAt
   Cart       Cart     @relation(fields: [cartId], references: [id])
   Product    Product  @relation(fields: [productId], references: [id])
 
