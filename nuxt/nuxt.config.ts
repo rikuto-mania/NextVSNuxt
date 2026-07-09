@@ -24,6 +24,11 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  routeRules:{
+    '/':{prerender:true},
+    '/products':{prerender:true},
+    '/products/**':{isr:60},
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true }
 })
