@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-const {data,error} = useFetch("/api/products")
+    import type {Products} from '~/../types/index'
+    import { ref } from 'vue';
 
- //ページネーション管理
-const currentPage = ref<number>(1);
-const ITEM_PRE_PAGE = 24;
+    const {data,error} = useFetch<Products[]>("/api/products")
 
-//初めのページ
-const start = computed(() =>{
-    return (currentPage.value -1) * ITEM_PRE_PAGE;
-});
+    //ページネーション管理
+    const currentPage = ref<number>(1);
+    const ITEM_PRE_PAGE = 24;
 
-//最後のページ
-const end = computed(() =>{
-    return start.value + ITEM_PRE_PAGE;
-});
+    //初めのページ
+    const start = computed(() =>{
+        return (currentPage.value -1) * ITEM_PRE_PAGE;
+    });
 
-//合計ページ
-const total = computed(()=>{
-    return Math.ceil(data.value?.length ?? 0) / ITEM_PRE_PAGE;
+    //最後のページ
+    const end = computed(() =>{
+        return start.value + ITEM_PRE_PAGE;
+    });
+
+    //合計ページ
+    const total = computed(()=>{
+        return Math.ceil(data.value?.length ?? 0) / ITEM_PRE_PAGE;
 })
 </script>
 

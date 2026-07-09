@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useProducts } from '#imports';
+  import type {Products} from '~/../types/index'
 
-//ダミー背景用カラー配列
-const slider = [
-  'from-[#FF6A33] to-[#FFD900]',
-  'from-[#3d9fb5] to-[#FFD900]'
-]
+  import { ref } from 'vue';
+  import { useProducts } from '#imports';
 
-const current = ref<number>(0)
+  //ダミー背景用カラー配列
+  const slider = [
+    'from-[#FF6A33] to-[#FFD900]',
+    'from-[#3d9fb5] to-[#FFD900]'
+  ]
 
-const next = () =>{
-  current.value = (current.value + 1) % slider.length;
-}
+  const current = ref<number>(0)
 
-const prev = () =>{
-  current.value = (current.value -1 + slider.length) % slider.length;
-}
+  const next = () =>{
+    current.value = (current.value + 1) % slider.length;
+  }
 
-const {data,error} = useFetch("/api/products")
+  const prev = () =>{
+    current.value = (current.value -1 + slider.length) % slider.length;
+  }
+
+  const {data,error} = useFetch <Products>("/api/products");
 
 </script>
 

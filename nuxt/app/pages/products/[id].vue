@@ -1,13 +1,14 @@
 <script setup lang="ts">
-const pieces = Array.from({length: 99},(_,i) => i +1)
-const route = useRoute();
-const id = Number(route.params.id);
+    import type {Products} from '~/../types/index'
+    const pieces = Array.from({length: 99},(_,i) => i +1)
+    const route = useRoute();
+    const id = Number(route.params.id);
 
-const {data:productData} = useFetch(`/api/products/${id}`)
-const {reviewdata} = useReview(id);
+    const {data:productData} = useFetch<Products>(`/api/products/${id}`);
+    const {reviewdata} = useReview(id);
 
-//画像入れ替え機能
-const currentImage = ref<string>('');
+    //画像入れ替え機能
+    const currentImage = ref<string>('');
 
 //初期値リセット
 watchEffect(() =>{
@@ -18,16 +19,21 @@ watchEffect(() =>{
 </script>
 
 <template>
-    <section :v-if="productData" class="flex flex-col md:flex-row justify-between px-4 xl:px-11 py-10" v-if="productData">
+    <section class="flex flex-col md:flex-row justify-between px-4 xl:px-11 py-10" v-if="productData">
         <div class="flex flex-col md:flex-row">
             <div class="flex flex-row md:flex-col gap-3 md:pr-4.5 pb-3">
-                <div class="flex justify-center items-center w-12 h-12 bg-[#F2F1F1]" v-for="image in productData.image" @click="currentImage = image.img_path">
+                <div
+                    class="flex justify-center items-center w-12 h-12 bg-[#F2F1F1] cursor-pointer"
+                    v-for="image in productData.image"
+                    :key="image.img_path"
+                    @click="currentImage = image.img_path ,console.log('clicked:', image.img_path, 'currentImage:', currentImage)"
+                >
                     <NuxtImg :src="`/products/${image.img_path}`" width="80" class="h-auto"/>
                 </div>
             </div>
             <div class="flex flex-col md:flex-row">
                 <div  class="flex justify-center items-center w-full h-100 md:w-100 md:h-100 bg-[#F2F1F1]">
-                    <NuxtImg v-if="productData?.image && currentImage" :src="`/products/${currentImage}`" width="360" class="h-auto"/>
+                    <NuxtImg v-if="currentImage" :src="`/products/${currentImage}`" width="360" class="h-auto"/>
                 </div>
                 <div class="md:pl-9 py-3">
                     <p class="text-4xl">{{productData.name}}</p>
@@ -58,7 +64,7 @@ watchEffect(() =>{
         </div>
         <hr class="border border-[#BBB7B7]"> 
     
-        <div v-for="reviews in reviewdata">
+        <div v-for="reviews in reviewdata" :key="reviews.id">
             <div class="py-4">
                 <!-- <p>{{reviews.userId}}</p> -->
                 <p class="text-yellow-400 pr-1.5">★★★★★</p>
