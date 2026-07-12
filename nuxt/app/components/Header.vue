@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import LoginDialog from './Dialog/LoginDialog.vue';
+    import LoginDialog from './Dialog/loginDialog.vue';
     import {ref} from 'vue';
 import SearchBar from './SearchBar.vue';
 
@@ -14,7 +14,9 @@ import SearchBar from './SearchBar.vue';
     <header class=" border-b border-gray-400 px-6 py-5">
         <div class="flex items-center justify-between pb-3 sm:pb-0">
             <div class="flex gap-4">
-                <p class="text-[#FF6A33] text-4xl font-bold">Rikushop</p>
+                <NuxtLink href="/">
+                     <p class="text-[#FF6A33] text-4xl font-bold">Rikushop</p>
+                </NuxtLink>
                 <div class="hidden sm:flex">
                     <SearchBar />
                 </div>
@@ -22,7 +24,9 @@ import SearchBar from './SearchBar.vue';
             <div class="flex items-center gap-2">
                 <p class="text-lg" @click="toggle">ログイン</p>
                 <LoginDialog v-if="isOpenDialog" @close="isOpenDialog = false"/>
-                <Icon name="mdi:cart" style="color: #FF6A33" size="2em" />
+                <NuxtLink href="/cart">
+                    <Icon name="mdi:cart" style="color: #FF6A33" size="2em" />
+                </NuxtLink>
             </div>
         </div>
         <div class="sm:hidden">
