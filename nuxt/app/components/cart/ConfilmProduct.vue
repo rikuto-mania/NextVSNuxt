@@ -3,12 +3,12 @@
         image?:string;
         title:string;
         price:number;
-        reviews:number;
+        quantity:number;
     }
     
     const props = defineProps<productCardProps>();
 
-    const imagepath = "/products/" + props.image;
+    const imagepath = "/products/" + props.image;   //画像パス
 </script>
 
 <template>
@@ -22,6 +22,6 @@
                 <p class="font-bold">¥<span class="pl-1.5 text-[#FF6A33]">{{price}}</span></p>
             </div>
        </div>
-        <p>数量：<span>11</span></p>
+        <p>数量：<span>{{quantity}}</span></p>
     </div>
 </template>
