@@ -19,7 +19,13 @@ interface Cart{
     }
 }
 
-export const useReview = () =>{
-    const {data:reviewdata} = useFetch<CartResponse[]>('/api/cart');
-    return {reviewdata}
+export const useCart = async () =>{
+    const {data:cartData} = useFetch<CartResponse>('/api/cart',{
+        deep:true
+    });
+    return {cartData}
 }
+
+//MEMO 
+//usefetchにdeepを設定すると変更監視の深さを制御することできる。
+//falseに設定するとデータ構造の最上位のみリアクティブにする。
