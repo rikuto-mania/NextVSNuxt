@@ -58,6 +58,7 @@ const handleSuccess = () =>{
                             password,
                             passwordConfilm
                         }"
+                        redirectUrl="/"
                         @success="handleSuccess"
                     />
                 </div>
