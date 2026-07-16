@@ -7,11 +7,28 @@ export default defineEventHandler(async(event)=>{
             where : { productId },
             orderBy:{
                 created_at:"desc"
+            },
+            include:{
+                user:{
+                    select:{username:true}
+                }
             }
-        })
+        });
 
-        return reviews
+        const groupCounts = await prisma.review.groupBy({
+            by:["level"],
+            where:{productId},
+            _count:{level:true}
+        });
+
+        const reviewCount:Record<number,number> ={5:0,4:0,3:0,2:0,1:0};
+
+        groupCounts.forEach(group =>{
+            reviewCount[group.level] = group._count.level;
+        });
+
+        return({reviews,reviewCount});
     }catch(errorr){
         throw createError({statusCode:500,statusMessage:"サーバエラー"})
     }
-})
+});
