@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import textArea from '~/components/textArea.vue';
     import submitButton from '~/components/submitButton.vue';
+    import Breadcrumb from '~/components/Breadcrumb.vue';
 
     //リクエストデータ
     const level = ref(5);
@@ -9,10 +10,17 @@
     //商品ID取得
     const route = useRoute();
     const productId = Number(route.params.id);
+
+    const breadcrumb = [
+        { name: '商品一覧', path: '/products' },
+        { name: '商品詳細', path: `/products/${productId}` },
+        { name: 'レビュー', path: `/products/${productId}/review` }
+    ]
 </script>
 
 <template>
     <section class="px-4 py-10 max-w-4xl mx-auto">
+        <Breadcrumb :items="breadcrumb"/>
         <div  class="pb-8 flex gap-2">
             <div class="bg-[#FF6A33] w-1 h-auto"></div>
             <p class="text-3xl">レビューを投稿</p>   

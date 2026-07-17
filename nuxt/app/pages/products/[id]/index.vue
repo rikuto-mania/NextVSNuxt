@@ -12,8 +12,6 @@
     
     //数量
     const currentQuantity = ref(1);
-
-    const level = ref(5);
     
     //カート追加
     const addCart = (id:number) =>{
@@ -44,6 +42,11 @@
         return Math.round((count / reviewdata.value.reviews.length) * 100);
     }
 
+    const breadcrumb = [
+        { name: '商品一覧', path: '/products' },
+        { name: '商品詳細', path: `/products/${id}` },
+    ]
+
     //初期値リセット
     watchEffect(() =>{
         if(productData.value?.image?.length && !currentImage.value){
@@ -53,41 +56,44 @@
 </script>
 
 <template>
-    <section class="flex flex-col md:flex-row justify-between px-4 xl:px-11 py-10" v-if="productData">
-        <div class="flex flex-col md:flex-row">
-            <div class="flex flex-row md:flex-col gap-3 md:pr-4.5 pb-3">
-                <div
-                    class="flex justify-center items-center w-12 h-12 bg-[#F2F1F1] cursor-pointer"
-                    v-for="image in productData.image"
-                    :key="image.img_path"
-                    @click="currentImage = image.img_path ,console.log('clicked:', image.img_path, 'currentImage:', currentImage)"
-                >
-                    <NuxtImg :src="`/products/${image.img_path}`" width="80" class="h-auto"/>
-                </div>
-            </div>
+    <section class="px-4 xl:px-11 py-10" v-if="productData">
+        <Breadcrumb :items="breadcrumb" />
+        <div class="flex flex-col md:flex-row justify-between">
             <div class="flex flex-col md:flex-row">
-                <div  class="flex justify-center items-center w-full h-100 md:w-100 md:h-100 bg-[#F2F1F1]">
-                    <NuxtImg v-if="currentImage" :src="`/products/${currentImage}`" width="360" class="h-auto"/>
+                <div class="flex flex-row md:flex-col gap-3 md:pr-4.5 pb-3">
+                    <div
+                        class="flex justify-center items-center w-12 h-12 bg-[#F2F1F1] cursor-pointer"
+                        v-for="image in productData.image"
+                        :key="image.img_path"
+                        @click="currentImage = image.img_path ,console.log('clicked:', image.img_path, 'currentImage:', currentImage)"
+                    >
+                        <NuxtImg :src="`/products/${image.img_path}`" width="80" class="h-auto"/>
+                    </div>
                 </div>
-                <div class="md:pl-9 py-3">
-                    <p class="text-4xl">{{productData.name}}</p>
-                    <p class="font-bold text-2xl hidden md:block">¥<span class="pl-1.5 text-[#FF6A33]">{{productData.price}}</span></p>
+                <div class="flex flex-col md:flex-row">
+                    <div  class="flex justify-center items-center w-full h-100 md:w-100 md:h-100 bg-[#F2F1F1]">
+                        <NuxtImg v-if="currentImage" :src="`/products/${currentImage}`" width="360" class="h-auto"/>
+                    </div>
+                    <div class="md:pl-9 py-3">
+                        <p class="text-4xl">{{productData.name}}</p>
+                        <p class="font-bold text-2xl hidden md:block">¥<span class="pl-1.5 text-[#FF6A33]">{{productData.price}}</span></p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="flex flex-col gap-4 w-full md:w-50 justify-center">
-            <p class="font-bold text-4xl">¥<span class="pl-1.5 text-[#FF6A33]">{{productData.price}}</span></p>
-            <div class="pb-2.5 ">
-                <label for="pieces">個数を選択</label>
-                <select v-model="currentQuantity" name="pieces" id="pieces" class="w-full py-2.5 border border-[#BBB7B7]">
-                    <option v-for="num in pieces" :key="num" :value="num">
-                        {{num}}
-                    </option>
-                </select>
+            <div class="flex flex-col gap-4 w-full md:w-50 justify-center">
+                <p class="font-bold text-4xl">¥<span class="pl-1.5 text-[#FF6A33]">{{productData.price}}</span></p>
+                <div class="pb-2.5 ">
+                    <label for="pieces">個数を選択</label>
+                    <select v-model="currentQuantity" name="pieces" id="pieces" class="w-full py-2.5 border border-[#BBB7B7]">
+                        <option v-for="num in pieces" :key="num" :value="num">
+                            {{num}}
+                        </option>
+                    </select>
+                </div>
+                <button class="w-full py-2.5 text-white bg-[#FF6A33]">購入する</button>
+                <button @click="addCart(id)" class="w-full py-2.5 bg-[#F2F1F1]">カートに追加</button>
             </div>
-            <button class="w-full py-2.5 text-white bg-[#FF6A33]">購入する</button>
-            <button @click="addCart(id)" class="w-full py-2.5 bg-[#F2F1F1]">カートに追加</button>
         </div>
     </section>
 
@@ -97,7 +103,7 @@
             <p class="text-3xl">{{reviewdata.reviews.length}}<span>件のレビュー</span></p>
         </div>
 
-      <div v-if="reviewdata.reviews" class="pb-8">
+      <div v-if="reviewdata.reviews.length > 0" class="pb-8">
         <div v-for="rating in [5,4,3,2,1]" class="flex items-center pb-2">
             <Icon v-for="n in 5" :name="n <= rating ? 'material-symbols:star-rounded' :'material-symbols:star-outline-rounded'" style="color: gold" size="36px" class=""/>    
             <div class="flex items-center gap-4">
