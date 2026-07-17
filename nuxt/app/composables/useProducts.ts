@@ -1,7 +1,7 @@
 import type { AsyncData } from "#app";
 
 interface Products{
-  id:Number;
+  id:number;
   name:string;
   price:number;
   created_at:Date;
@@ -11,10 +11,10 @@ interface Products{
 }
 
 export function useProduct(id? :number){
-  return useApi<Products>(`/products/${id}`);
+  return useFetch<Products>(`/api/products/${id}`);
 }
 
 export function useProducts(id? :number){
-  return useApi<Products[]>("/products");
+  return useFetch<Products[]>("/api/products");
 }
 

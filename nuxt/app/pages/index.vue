@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useProducts } from '#imports';
+  import type {Products} from '~/../types/index'
 
-//ダミー背景用カラー配列
-const slider = [
-  'from-[#FF6A33] to-[#FFD900]',
-  'from-[#3d9fb5] to-[#FFD900]'
-]
+  import { ref } from 'vue';
+  import { useProducts } from '#imports';
 
-const current = ref<number>(0)
+  //ダミー背景用カラー配列
+  const slider = [
+    'from-[#FF6A33] to-[#FFD900]',
+    'from-[#3d9fb5] to-[#FFD900]'
+  ]
 
-const next = () =>{
-  current.value = (current.value + 1) % slider.length;
-}
+  const current = ref<number>(0)
 
-const prev = () =>{
-  current.value = (current.value -1 + slider.length) % slider.length;
-}
-const {data} = useProducts()
+  const next = () =>{
+    current.value = (current.value + 1) % slider.length;
+  }
+
+  const prev = () =>{
+    current.value = (current.value -1 + slider.length) % slider.length;
+  }
+
+  const {data,error} = useFetch <Products>("/api/products");
 
 </script>
 
@@ -51,11 +54,14 @@ const {data} = useProducts()
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
+          
           <ProductCard
           v-for="products in data"
-          :to="`/${products.id}`"
+          :to="`/products/${products.id}`"
           :title="products.name"
-          :price=products.price :reviews=2 />
+          :image="products.image[0]?.img_path"
+          :price="products.price" 
+          :reviews="products._count.review" />
         </div>
 
         <div class="flex justify-center"> 

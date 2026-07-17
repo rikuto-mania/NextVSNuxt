@@ -25,7 +25,7 @@ export default defineEventHandler(async(event) =>{
             }
         });
         
-        return {statusCode:200,message:"レビューを投稿しました！",data:create}
+        return {statusCode:201,message:"レビューを投稿しました！",data:create}
     }catch(error){
         throw createError({statusCode:500,statusMessage:"サーバーエラー"});
     }
