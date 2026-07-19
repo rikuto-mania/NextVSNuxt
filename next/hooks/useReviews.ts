@@ -3,7 +3,12 @@ import useApi from "./useApi";
 interface reviewResponse{
     status:number;
     message:string;
-    data:review[];
+    data:data;
+}
+
+interface data{
+    allReviews:review[];
+    reviewCount:rating;
 }
 
 interface review{
@@ -14,6 +19,14 @@ interface review{
     level:Float16Array;
     created_at:Date;
     updated_at:Date;
+}
+
+export interface rating{
+    1: number,
+    2: number,
+    3: number,
+    4: number,
+    5: number
 }
 
 

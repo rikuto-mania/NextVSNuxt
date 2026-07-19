@@ -18,14 +18,32 @@ export async function GET(req:NextRequest,context:{params:Promise<{id:string}>})
             where:{productId:productId},
             orderBy:{
                 created_at:"desc"
+            },
+            include:{
+                User:{
+                    select:{username:true}
+                }
             }
-        })
+            });
 
-        return NextResponse.json({"status":200,data:allReviews});
+             const groupCounts = await prisma.review.groupBy({
+                by:["level"],
+                where:{productId},
+                _count:{level:true}
+            });
+
+            const reviewCount:Record<number,number> ={5:0,4:0,3:0,2:0,1:0};
+
+            groupCounts.forEach(group =>{
+                reviewCount[group.level] = group._count.level;
+            });
+
+            const reviewRespose = {allReviews,reviewCount}
+
+        return NextResponse.json({"status":200,data:reviewRespose});
     }catch(error){
         return NextResponse.json({"status":500,"message":"サーバーエラーが発生しました"},{status:500}); 
     }
-        
 }
 
 //レビュー作成API
