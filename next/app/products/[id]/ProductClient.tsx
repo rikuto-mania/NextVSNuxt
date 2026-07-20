@@ -4,20 +4,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { productResponse,reviewResponse } from "@/types/api";
+import { Icon } from "@iconify/react";
 
 type Props = {
     productData:productResponse;
     reviewData:reviewResponse;
 }
 
+type ReviewLevel = 1 | 2 | 3 | 4 | 5;
 
 export default function({productData, reviewData}:Props){
     const images = productData?.data.Image || [];
     const reviews = reviewData?.data || [];
+    const rawLevels:ReviewLevel[] = [5,4,3,2,1];
+    const starLevels:ReviewLevel[] = [1,2,3,4,5];
 
     const initialImage = images[0].img_path || "";
     const [selectedImage,setSelectedImage] =useState<string>(initialImage);
 
+    //平均レビュー
+    const avgReview = () =>{
+        if(!reviews.reviewCount || reviews.allReviews.length === 0) return;
+
+        const counts = reviews.reviewCount;
+
+        const totalScore =(
+            (5 * counts[5] || 0) + 
+            (4 * counts[4] || 0) + 
+            (3 * counts[3] || 0) + 
+            (2 * counts[2] || 0) + 
+            (1 * counts[1] || 0)
+        );
+
+        return (totalScore / reviews.allReviews.length).toFixed(1);
+    }
+
+
+    const getParcentage = (level:ReviewLevel) =>{
+        if(!reviews.reviewCount || reviews.allReviews.length === 0) return;
+
+        const count = reviews.reviewCount[level] || 0;
+        return Math.round((count / reviews.allReviews.length) * 100);
+    }
+
+
+    console.log(reviews);
     const pieces = Array.from({length: 99},(_,i) => i +1)
     return(
         <main>
@@ -68,19 +99,43 @@ export default function({productData, reviewData}:Props){
                     <div className="bg-[#FF6A33] w-1 h-auto"></div>
                     <p className="text-3xl">レビュー</p>
                 </div>
+                {reviews.allReviews.length > 0 &&(
+                    <div className="pb-8">
+                        {rawLevels.map((level) =>(
+                            <div className="flex items-center pb-2" key={level}>
+                                {starLevels.map((n) =>(
+                                    <Icon key={n} icon={n  <= level ? 'material-symbols:star-rounded' : 'material-symbols:star-outline-rounded'} style={{color:'gold',fontSize:'24px'}}/>    
+                                ))}
+                                 <div className="flex items-center gap-4">
+                                    <div className="w-64 h-2 bg-gray-400">
+                                        <div className="h-2 bg-[#FF6A33]" style={{width:`${getParcentage(level)}%`}}></div>
+                                    </div>
+                                    <p className=" text-gray-500">{reviews.reviewCount[level] || 0}</p>
+                                </div>
+                            </div>
+                        ))}
+                        <Link href={`/products/${productData.data.id}/review`} >
+                            <button className="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33] mt-5">レビューを投稿する</button>
+                        </Link>
+                    </div>
+                )}
+
                 <hr className="border border-[#BBB7B7]" />       
                     {
-                    
-                        reviewData?.data.length ? (
-                            reviewData?.data.map((review) =>(
+                        reviews.allReviews.length  >0 ? (
+                            reviews.allReviews.map((review) =>(
                                 <div key={review.id}>
-                                        <div className="py-4">
-                                            <p>{review.id}</p>
-                                            <p className="text-yellow-400 pr-1.5">★★★★★</p>
-                                            <p>{review.description}</p>
+                                    <div className="py-4">
+                                        <p className="font-semibold">{review.User.username}</p>
+                                        <div className="flex pb-3">
+                                             {starLevels.map((n) =>(
+                                                <Icon key={n} icon={n  <= review.level ? 'material-symbols:star-rounded' : 'material-symbols:star-outline-rounded'} style={{color:'gold',fontSize:'24px'}}/>    
+                                            ))}
                                         </div>
-                                        <hr className="border-b border-[#BBB7B7]"></hr>
+                                        <p>{review.description}</p>
                                     </div>
+                                    <hr className="border-b border-[#BBB7B7]"></hr>
+                                </div>
                             ))
                         ):(
                              <div className="flex flex-col py-4">
