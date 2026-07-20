@@ -32,7 +32,7 @@ export async function POST(req:NextRequest,res:NextResponse){
 
         const res = NextResponse.json({status:"success",code:200,message:"ログイン成功",token:token})
 
-       res.cookies.set("token",token,{
+       res.cookies.set("accessToken",token,{
             httpOnly:true,
             secure:process.env.NODE_ENV == "production",
             path:"/",
