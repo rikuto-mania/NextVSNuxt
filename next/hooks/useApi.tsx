@@ -31,13 +31,10 @@ export const useApi =<T,D = unknown>(
             try{
                 let token:string | undefined;
 
-                if(requireAuth){
-                    token = cookie.get('accessToken');
-                }
-
                 const response = await fetch(url,{
                     method,
                     body: method !== "GET" && requestData?JSON.stringify(requestData) : undefined,
+                    credentials: "include",
                     headers:{
                         "Content-Type":"application/json",
                         ...(requireAuth && token ? {"Authorization": `Bearer ${token}`} : {})
