@@ -3,8 +3,8 @@ import { NextRequest,NextResponse } from "next/server";
 
 //認証ミドルウェア
 export const requireAuth = (req:NextRequest) =>{
-    const token = req.headers.get("authorization") ?.replace("Bearer","")
-
+    const token = req.cookies.get("accessToken")?.value
+   
     if(!token) return null;
 
     try{
