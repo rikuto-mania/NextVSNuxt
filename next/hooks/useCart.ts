@@ -8,6 +8,7 @@ interface cartResponse{
 }
 
 interface Cart{
+    id:number;
     cartId:number;
     productId:number;
     quantity:number;
@@ -25,5 +26,5 @@ interface Product{
 }
 
 export default function useCart(){
-    return useApi<cartResponse>(`http://localhost:3033/api/cart`,"GET");
+    return useApi<cartResponse>("/api/cart","GET",true);
 }
