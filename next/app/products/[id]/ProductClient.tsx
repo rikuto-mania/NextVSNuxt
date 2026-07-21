@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { productResponse,reviewResponse } from "@/types/api";
 import { Icon } from "@iconify/react";
+import Breadcrumb from "@/components/Breadcrumb";
+import useApi from "@/hooks/useApi";
 
 type Props = {
     productData:productResponse;
@@ -18,9 +20,11 @@ export default function({productData, reviewData}:Props){
     const reviews = reviewData?.data || [];
     const rawLevels:ReviewLevel[] = [5,4,3,2,1];
     const starLevels:ReviewLevel[] = [1,2,3,4,5];
-
+    const [quantity,setQuantity] = useState<number>(1);
     const initialImage = images[0].img_path || "";
     const [selectedImage,setSelectedImage] =useState<string>(initialImage);
+
+     const {fetchData} = useApi("http://localhost:3033/api/cart/create","POST",true);
 
     //平均レビュー
     const avgReview = () =>{
@@ -39,7 +43,7 @@ export default function({productData, reviewData}:Props){
         return (totalScore / reviews.allReviews.length).toFixed(1);
     }
 
-
+    //レビューパーセンテージ取得
     const getParcentage = (level:ReviewLevel) =>{
         if(!reviews.reviewCount || reviews.allReviews.length === 0) return;
 
@@ -47,12 +51,26 @@ export default function({productData, reviewData}:Props){
         return Math.round((count / reviews.allReviews.length) * 100);
     }
 
+     //パンくずリスト
+    const breadcrumb = [
+        { name: '商品一覧', path: '/products' },
+        { name: '商品詳細', path: `/products/${productData.data.id}`},
+    ];
 
-    console.log(reviews);
-    const pieces = Array.from({length: 99},(_,i) => i +1)
+    //選択個数
+    const pieces = Array.from({length: 99},(_,i) => i +1);
+
+    //カート追加
+    const handleSubmit = async () =>{
+        await fetchData({productId:productData.data.id,quantity:quantity});
+        
+    }
+
+
     return(
-        <main>
-            <section className="flex flex-col md:flex-row justify-between px-4 xl:px-11 py-10">
+        <main className="px-4 xl:px-11 py-10">
+            <Breadcrumb items={breadcrumb} />
+            <section className="flex flex-col md:flex-row justify-between">
                 <div className="flex flex-col md:flex-row">
                     <div className="flex flex-row md:flex-col gap-3 md:pr-4.5 pb-3">
                         {images.map((image,index) =>{
@@ -79,7 +97,7 @@ export default function({productData, reviewData}:Props){
                     <p className="font-bold text-4xl">¥<span className="pl-1.5 text-[#FF6A33]">{productData?.data.price}</span></p>
                     <div className="pb-2.5 ">
                         <label htmlFor="pieces">個数を選択</label>
-                        <select name="pieces" id="pieces" className="w-full py-2.5 border border-[#BBB7B7]">
+                        <select name="pieces" id="pieces" className="w-full py-2.5 border border-[#BBB7B7]" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
                             {pieces.map((num) =>{
                                 return(
                                     <option key={num} value={num}>
@@ -90,7 +108,7 @@ export default function({productData, reviewData}:Props){
                         </select>
                     </div>
                     <button className="w-full py-2.5 text-white bg-[#FF6A33]">購入する</button>
-                    <button className="w-full py-2.5 bg-[#F2F1F1]">カートに追加</button>
+                    <button onClick={handleSubmit} className="w-full py-2.5 bg-[#F2F1F1]" >カートに追加</button>
                 </div>
             </section>
 

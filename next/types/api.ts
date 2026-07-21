@@ -3,7 +3,12 @@
 export interface reviewResponse{
     status:number;
     message:string;
-    data:review[];
+    data:data;
+}
+
+interface data{
+    allReviews:review[];
+    reviewCount:rating;
 }
 
 interface review{
@@ -11,9 +16,20 @@ interface review{
     productId:number;
     userid:number;
     description:string;
-    level:Float16Array;
+    level:number;
     created_at:Date;
     updated_at:Date;
+    User:{
+        username:string;
+    }
+}
+
+export interface rating{
+    1: number,
+    2: number,
+    3: number,
+    4: number,
+    5: number
 }
 
 //商品API
