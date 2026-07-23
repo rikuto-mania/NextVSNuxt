@@ -115,7 +115,7 @@ export default function({productData, reviewData}:Props){
             <section className="px-4 xl:px-11 py-10">
                 <div className="pb-8 flex gap-2">
                     <div className="bg-[#FF6A33] w-1 h-auto"></div>
-                    <p className="text-3xl">レビュー</p>
+                    <p className="text-3xl">{reviews.allReviews.length}件のレビュー</p>
                 </div>
                 {reviews.allReviews.length > 0 &&(
                     <div className="pb-8">
