@@ -3,6 +3,7 @@ import Link from "next/link";
 import TextInput from "@/components/textInput";
 import { SubmitButton } from "@/components/submitButton";
 import useApi from "@/hooks/useApi";
+import { useRouter } from "next/navigation";
 
 interface DialogProps{
     onClose:() => void;
@@ -33,6 +34,7 @@ export const LoginDialog = ({onClose}:DialogProps) =>{
     });
 
     const [errorData,setErrorData] = useState<Error>({});
+    const router = useRouter();
 
     //モード切り替え
     const toggleMenu = () =>{
@@ -78,9 +80,12 @@ export const LoginDialog = ({onClose}:DialogProps) =>{
                 return;
             }
 
-            
-           isLoginMode ? onClose() : setIsLoginMode(!isLoginMode);
-            
+            if(isLoginMode){
+                router.push("/");
+                onClose();
+            }else{
+                setIsLoginMode(!isLoginMode);
+            }            
         }
     }
 

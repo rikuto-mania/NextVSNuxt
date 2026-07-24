@@ -58,7 +58,7 @@ const handleSuccess = () =>{
                             password,
                             passwordConfilm
                         }"
-                        redirectUrl="/"
+                        :redirectUrl="isLoginMode ? '/' : null"
                         @success="handleSuccess"
                     />
                 </div>

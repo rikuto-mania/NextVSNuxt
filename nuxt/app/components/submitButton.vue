@@ -4,15 +4,12 @@
         url:string,
         method:"GET" | "POST" | "PUT" | "DELETE",
         body?:any,
-        redirectUrl:string;
+        redirectUrl:string | null;
     }
 
     const props = defineProps<butonProps>();
-
     const rotue = useRouter()
 
-
-   
     //親コンポーネントへ「success」イベントを送信するための「emit」
     const emit = defineEmits<{
         (e:"success") : void
@@ -23,9 +20,11 @@
         try{
             await useApi(props.url,props.method,{body:props.body});
 
-             emit("success");
-            rotue.push(props.redirectUrl);
-             
+            emit("success");
+
+            if(props.redirectUrl){
+                rotue.push(props.redirectUrl);
+            }
         }catch(error){
             console.error("送信エラー:",error);
         }
