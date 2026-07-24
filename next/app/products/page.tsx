@@ -22,35 +22,37 @@ export default function Products(){
 
 
     return(
-        <main className="max-w-5xl px-4 py-16 mx-auto">
-            <section className="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-4 ">
-                {productsData?.data.slice(start,end).map((product) =>{
-                    return(
-                        <Link key={product.name} href={`products/${product.id}`}>
-                            <ProductCard title={product.name} price={product.price} reviews={product._count.Review} image={product.Image[0].img_path} />
-                        </Link>
-                    )
-                })}
-            </section>
-            
+        <main>
+            <div className="xl:max-w-5xl px-4 py-16 mx-auto">
+                <section className="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-4 ">
+                    {productsData?.data.slice(start,end).map((product) =>{
+                        return(
+                            <Link key={product.name} href={`products/${product.id}`}>
+                                <ProductCard title={product.name} price={product.price} reviews={product._count.Review} image={product.Image[0].img_path} />
+                            </Link>
+                        )
+                    })}
+                </section>
+                
 
-            <section className="relative py-4">
-                {!(page === 1) && 
-                    <Link href={`products?page=${page}`} className=" absolute left-0">
-                        <button className="bg-[#FF6A33] text-white px-2 py-1.5" onClick={() => setPage(page -1)}>
-                            戻る
+                <section className="relative py-4">
+                    {!(page === 1) && 
+                        <Link href={`products?page=${page}`} className=" absolute left-0">
+                            <button className="bg-[#FF6A33] text-white px-2 py-1.5" onClick={() => setPage(page -1)}>
+                                戻る
+                            </button>
+                        </Link>
+                    }
+
+                    {page === totalPage &&
+                        <Link href={`products?page=${page}`} className=" absolute right-0">
+                        <button className="bg-[#FF6A33] text-white px-2 py-1.5" onClick={() => setPage(page  + 1)}>
+                            進む
                         </button>
                     </Link>
-                }
-
-                {page === totalPage &&
-                    <Link href={`products?page=${page}`} className=" absolute right-0">
-                    <button className="bg-[#FF6A33] text-white px-2 py-1.5" onClick={() => setPage(page  + 1)}>
-                        進む
-                    </button>
-                </Link>
-                }
-            </section>
+                    }
+                </section>
+            </div>
         </main>
     )
 }   

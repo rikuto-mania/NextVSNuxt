@@ -26,7 +26,7 @@
 
 <template>
   <div class="min-h-screen">
-      <section class="max-w-5xl mx-auto px-4 py-16">
+      <section class="xl:max-w-5xl mx-auto px-4 py-16">
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
           <ProductCard
           v-for="products in data?.slice(start,end)"

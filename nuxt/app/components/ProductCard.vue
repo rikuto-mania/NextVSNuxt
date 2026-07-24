@@ -14,7 +14,7 @@
 
 <template>
     <NuxtLink :to="to">
-        <div class="flex justify-center items-center bg-[#F2F1F1] w-60 h-60 rounded-2xl ">
+        <div class="flex justify-center items-center bg-[#F2F1F1] w-full md:w-60 h-60 rounded-2xl ">
            <NuxtImg :src="imagepath" width="200" height="auto"/>
         </div>
         <p class="text-2xl font-medium py-3">{{title}}</p>

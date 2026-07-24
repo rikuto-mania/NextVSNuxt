@@ -48,7 +48,7 @@
         </button>
       </div>
 
-      <section class="max-w-5xl mx-auto px-4 py-16">
+      <section class="xl:max-w-5xl mx-auto px-4 py-16">
         <div class="pb-8">
           <p class="text-3xl">新しい商品</p>
         </div>

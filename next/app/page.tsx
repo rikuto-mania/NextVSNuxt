@@ -57,12 +57,12 @@ export default function Home() {
         </button>
       </div>
 
-      <section className="max-w-5xl mx-auto px-4 py-16">
+      <section className="xl:max-w-5xl mx-auto px-4 py-16">
         <div className="pb-8">
           <p className="text-3xl">新しい商品</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10 items-center">
           {productsData?.data.slice(0,7).map((product) =>{
             return(
               <Link key={product.name} href={`products/${product.id}`}>
