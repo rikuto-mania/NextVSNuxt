@@ -40,26 +40,26 @@ export default function Review(){
     }
 
     return(
-        <div>
+        <main>
             <section className="px-4 py-10 max-w-4xl mx-auto">
-            <Breadcrumb items={breadcrumb} />
-            <div  className="pb-8 flex gap-2">
-                <div className="bg-[#FF6A33] w-1 h-auto"></div>
-                <p className="text-3xl">レビューを投稿</p>   
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <p>評価</p>
-                    <div className="flex flex-row">
-                        {level.map((n) =>(
-                            <Icon key={n} onClick={() => setReviewLevel(n)}  icon={n  <= reviewlevel ? 'material-symbols:star-rounded' : 'material-symbols:star-outline-rounded'} style={{color:'gold',fontSize:'48px'}}/>    
-                        ))}
-                    </div>
+                <Breadcrumb items={breadcrumb} />
+                <div  className="pb-8 flex gap-2">
+                    <div className="bg-[#FF6A33] w-1 h-auto"></div>
+                    <p className="text-3xl">レビューを投稿</p>   
                 </div>
-                <TextArea  onChange={(e) => setDescription(e.target.value)} label="レビュー" id="review" name="review"/>
-                <SubmitButton value="投稿する" />
-            </form>
-        </section>
-        </div>   
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <p>評価</p>
+                        <div className="flex flex-row">
+                            {level.map((n) =>(
+                                <Icon key={n} onClick={() => setReviewLevel(n)}  icon={n  <= reviewlevel ? 'material-symbols:star-rounded' : 'material-symbols:star-outline-rounded'} style={{color:'gold',fontSize:'48px'}}/>    
+                            ))}
+                        </div>
+                    </div>
+                    <TextArea  onChange={(e) => setDescription(e.target.value)} label="レビュー" id="review" name="review"/>
+                    <SubmitButton value="投稿する" />
+                </form>
+            </section>
+        </main>   
     )
 }
