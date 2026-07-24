@@ -24,7 +24,7 @@ export const Header = () =>{
                 <div className="flex items-center gap-2">
                     <p className="text-lg" onClick={toggle}>ログイン</p>
                     { isOpenDialog && <div className=" bg-black/20 fixed inset-0 z-10 " onClick={() => toggle()}><LoginDialog onClose={() => toggle()} /></div> }
-                    <Icon icon="mdi:cart" style={{ color: "#FF6A33" }} width="24px" height="24px" />
+                    <Icon icon="mdi:cart" style={{ color: "#FF6A33" }} width="32px" height="32px" />
                 </div>
             </div>
             <div className="sm:hidden">

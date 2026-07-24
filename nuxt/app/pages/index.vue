@@ -53,7 +53,7 @@
           <p class="text-3xl">新しい商品</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10 items-center">
           
           <ProductCard
           v-for="products in data"
