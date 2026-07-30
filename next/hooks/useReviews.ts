@@ -31,5 +31,5 @@ export interface rating{
 
 
 export default function useReviews(id:number){
-    return useApi<reviewResponse>(`http://localhost:3033/api/review/${id}`,"GET");
+    return useApi<reviewResponse>(`http://localhost:3030/api/review/${id}`,"GET");
 }

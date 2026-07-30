@@ -6,7 +6,7 @@ export const dynamicParams = true;
 
 export async function generateStaticParams(){   
     try{
-         const res = await fetch(`${process.env.BASE_URL}/api/product`);
+         const res = await fetch(`http://localhost:3000/api/product`);
         const json = await res.json();
 
         const products = Array.isArray(json?.data) ? json.data : Array.isArray(json);
@@ -27,8 +27,8 @@ export async function ProductDetail({params}:{params:Promise<{id:string}>}){
     
     try{
          const [productRes,reviewRes] = await Promise.all([
-            fetch (`${process.env.BASE_URL}/api/product/${id}`,fetchOptions),
-            fetch(`${process.env.BASE_URL}/api/review/${id}`,fetchOptions)
+            fetch (`http://localhost:3000/api/product/${id}`,fetchOptions),
+            fetch(`http://localhost:3000/api/review/${id}`,fetchOptions)
         ]);
 
         const productData : productResponse = await productRes.json();

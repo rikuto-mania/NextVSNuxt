@@ -31,6 +31,6 @@ interface count{
 }
 
 export default function useProducts(){
-    return useApi<productResponse>("http://localhost:3033/api/product","GET");
+    return useApi<productResponse>("http://localhost:3030/api/product","GET");
 }
 

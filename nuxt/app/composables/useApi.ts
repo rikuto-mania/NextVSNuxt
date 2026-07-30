@@ -15,7 +15,7 @@ export const useApi = async <T>(
     const token = useCookie('token').value;
 
     const defaults: UseFetchOptions<T> = {
-        baseURL: (config.public.apibase ||"http://localhost:3000/api") as string,
+        baseURL: (config.public.apibase ||"http://localhost:3031/api") as string,
         method: method,
         headers: {
             Authorization : token ?  `Bearer ${token} `: ""   // クッキーからトークンを取得

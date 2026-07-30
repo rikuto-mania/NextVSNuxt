@@ -34,8 +34,6 @@ export default function Cart(){
         );
     }
 
-
-    console.log(cartData);
     return(
         <div>
             <section className="max-w-5xl mx-auto px-4 py-10">

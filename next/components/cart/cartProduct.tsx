@@ -13,8 +13,8 @@ interface productCardProps{
 }
 
 export const CartProduct = ({id,image,title,price,quantity,onDelete,onUpdate}:productCardProps) =>{
-    const {fetchData:updateData} = useApi(`http://localhost:3033/api/cart/${id}`,"PUT");
-    const {fetchData:deleteData} = useApi(`http://localhost:3033/api/cart/${id}`,"DELETE");
+    const {fetchData:updateData} = useApi(`http://localhost:3030/api/cart/${id}`,"PUT");
+    const {fetchData:deleteData} = useApi(`http://localhost:3030/api/cart/${id}`,"DELETE");
    
     // //商品削除
     const handleDeletedItems = async() =>{

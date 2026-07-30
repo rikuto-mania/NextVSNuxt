@@ -24,7 +24,7 @@ export default function({productData, reviewData}:Props){
     const initialImage = images[0].img_path || "";
     const [selectedImage,setSelectedImage] =useState<string>(initialImage);
 
-     const {fetchData} = useApi("http://localhost:3033/api/cart/create","POST",true);
+     const {fetchData} = useApi("http://localhost:3030/api/cart/create","POST",true);
 
     //平均レビュー
     const avgReview = () =>{
@@ -158,7 +158,7 @@ export default function({productData, reviewData}:Props){
                         ):(
                              <div className="flex flex-col py-4">
                                 <p className="text-center pb-2">レビューが投稿されていません</p>
-                                <Link href={"/review/create"} className="bg-[#FF6A33] text-white rounded-full px-5 py-2 text-center">投稿する</Link>
+                                <Link href={`/products/${productData.data.id}/review`} className="bg-[#FF6A33] text-white rounded-full px-5 py-2 text-center">投稿する</Link>
                             </div>
                         )
                     }

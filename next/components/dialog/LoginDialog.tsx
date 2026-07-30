@@ -63,8 +63,8 @@ export const LoginDialog = ({onClose}:DialogProps) =>{
 
 
     const url = isLoginMode 
-        ? "http://localhost:3033/api/auth/login"
-        : "http://localhost:3033/api/auth/register";
+        ? "http://localhost:3030/api/auth/login"
+        : "http://localhost:3030/api/auth/register";
 
   const {fetchData} = useApi(url,"POST");
 
