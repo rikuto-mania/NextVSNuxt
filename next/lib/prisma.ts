@@ -1,8 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import pkg from '@prisma/client'
+import type { PrismaClient as PrismaClientType } from '@prisma/client'
+const { PrismaClient } = pkg
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
 //Mysqlコネクションアダプター
 const adapter = new PrismaMariaDb({
+    host:process.env.DB_HOST,
     user:process.env.DB_USER,
     port:Number(process.env.DB_PORT),
     database:process.env.DB_NAME,
@@ -12,7 +15,7 @@ const adapter = new PrismaMariaDb({
 })
 
 //Nodejsのグローバルスコープにprismaを保存するための準備
-export const globalForPrisma = globalThis as unknown as{ prisma: PrismaClient | undefined; }
+export const globalForPrisma = globalThis as unknown as{ prisma: PrismaClientType | undefined; }
 
 //prismaインスタンスの作成または再利用
 export const prisma = globalForPrisma.prisma ?? new PrismaClient({adapter});

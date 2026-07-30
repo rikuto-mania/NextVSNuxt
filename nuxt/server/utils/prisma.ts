@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import pkg from '@prisma/client'
+import type { PrismaClient as PrismaClientType } from '@prisma/client'
+const { PrismaClient } = pkg
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-
 
 //データベースに接続するためのアダプターを定義
 const adapter = new PrismaMariaDb({
@@ -16,7 +17,7 @@ const adapter = new PrismaMariaDb({
 // TypeScript の型定義を使って、Node.js のグローバルスコープに
 // prisma を保存できるように準備（再利用のため）
 const globalForPrisma = globalThis as unknown as {
-    prisma : PrismaClient | undefined;
+    prisma : PrismaClientType | undefined;
 }
 
 
