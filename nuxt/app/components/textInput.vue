@@ -6,6 +6,7 @@
         name:string,
         id:string,
         placeholder?:string,
+        error?:string,
         value?: string, 
     }
 
@@ -20,14 +21,18 @@
 
 <template>
     <div class="flex flex-col pb-6">
-        <label :for="id" class="pb-3">{{label}}</label>
+       
+        <div class="flex gap-6">
+            <label :for="id" class="pb-3">{{label}}</label>
+            <p v-if="error" class="text-red-400">{{error}}</p>
+        </div>
         <input 
             @input="emit('update:modelValue',($event.target as HTMLInputElement).value)"
             :type="type"
             :name="name"
             :id="id"
             :placeholder="placeholder" 
-            :value="modelValue",
+            :value="modelValue"
             class="px-3 py-2.5 rounded-lg border-2 border-[#BBB7B7] w-full"
         >
     </div>

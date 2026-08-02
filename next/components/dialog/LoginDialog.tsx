@@ -44,18 +44,31 @@ export const LoginDialog = ({onClose}:DialogProps) =>{
     const validation = () =>{
         const newErrors:Error = {};
 
-        if( !formData.email) newErrors.email = "メールアドレスが入力されていません";
+        if(!formData.email) newErrors.email = "メールアドレスが入力されていません";
         if(!isLoginMode && !formData.username) newErrors.username = "名前が入力されていません";
 
-        if(!isLoginMode && formData.password !== formData.passwordConfilm) {
-            newErrors.password = "パスワードが一致しません";
-             newErrors.passwordConfilm = "パスワードが一致しません";
-        }
+        if(!formData.password) {
+            newErrors.password = "パスワードが入力されていません";
+         }else{
+            if(formData.password.length <= 8){
+                newErrors.password = "パスワード8文字以上で入力してください";
+            }else if(formData.password.length >= 72){
+                newErrors.password =  "パスワードは72文字以内で入力してください";
+            }  
+         }
 
-        if(formData.password.length <= 8) newErrors.password = "パスワード8文字以上で入力してください";
-        if(!isLoginMode && formData.password.length <= 8)  newErrors.passwordConfilm = "パスワード8文字以上で入力してください";
-        if(formData.password.length >= 72) newErrors.password =  "パスワードは72文字以内で入力してください";
-        if(!isLoginMode && formData.password.length >= 72) newErrors.passwordConfilm = "パスワードは72文字以内で入力してください";
+        if(!isLoginMode){
+            if(!formData.passwordConfilm){
+                newErrors.passwordConfilm = "パスワードが入力されていません";
+            }else if(formData.password !== formData.passwordConfilm){
+                newErrors.password = "パスワードが一致しません";
+                newErrors.passwordConfilm = "パスワードが一致しません";
+            }else if(formData.passwordConfilm.length < 8){
+                newErrors.passwordConfilm = "パスワード8文字以上で入力してください";
+            }else if(formData.password.length > 72){
+               newErrors.passwordConfilm = "パスワードは72文字以内で入力してください"; 
+            }
+        }
 
         setErrorData(newErrors);
         return Object.values(newErrors).length === 0;

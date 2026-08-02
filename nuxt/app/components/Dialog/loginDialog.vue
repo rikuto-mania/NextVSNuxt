@@ -6,11 +6,61 @@ const email= ref("");
 const password = ref("");
 const passwordConfilm = ref("");
 
-
 //状態管理変数(初期値はログイン(true))
 const isLoginMode = ref(true);
 
 const emit = defineEmits(['close']); 
+
+type FormErrors = Partial<{
+  email: string;
+  username: string;
+  password: string;
+  passwordConfilm: string;
+}>;
+
+const errors = ref<FormErrors>({});
+
+
+const validate = () => {
+    const newErrors: FormErrors = {};
+
+     if(!email.value) newErrors.email = "メールアドレスが入力されていません";
+        if(!isLoginMode.value && !username.value) newErrors.username = "名前が入力されていません";
+
+        if(!password.value) {
+            newErrors.password = "パスワードが入力されていません";
+         }else{
+            if(password.value.length <= 8){
+                newErrors.password = "パスワード8文字以上で入力してください";
+            }else if(password.value.length >= 72){
+                newErrors.password =  "パスワードは72文字以内で入力してください";
+            }  
+         }
+
+        if(!isLoginMode){
+            if(!passwordConfilm.value){
+                newErrors.passwordConfilm = "パスワードが入力されていません";
+            }else if(password.value !== passwordConfilm.value){
+                newErrors.password = "パスワードが一致しません";
+                newErrors.passwordConfilm = "パスワードが一致しません";
+            }else if(passwordConfilm.value.length < 8){
+                newErrors.passwordConfilm = "パスワード8文字以上で入力してください";
+            }else if(password.value.length > 72){
+               newErrors.passwordConfilm = "パスワードは72文字以内で入力してください"; 
+            }
+        }
+
+        errors.value = newErrors;
+        return Object.keys(newErrors).length === 0;
+}
+
+
+const handleSubmitClick = (e:MouseEvent) =>{
+    if(!validate()){
+        e.stopPropagation();
+        e.preventDefault();
+    }
+}
 
 //モード切り替え
 const toggleMenu = () =>{
@@ -36,15 +86,15 @@ const handleSuccess = () =>{
                 <p class="font-bold text-2xl pb-12">{{isLoginMode ? "ログイン" : "新規登録"}}</p>
 
                  <div v-if="!isLoginMode">
-                     <TextInput v-model="username" label="お名前" type="text" name="usernama" id="username" />
+                     <TextInput v-model="username" label="お名前" type="text" name="usernama" id="username" :error="errors.username"/>
                 </div>
-                <TextInput v-model="email" label="メールアドレス" type="email" name="mail" id="mail" placeholder="exsample@rikushop.com"/>
-                <TextInput v-model="password" label="パスワード" type="password" name="password" id="password" />
+                <TextInput v-model="email" label="メールアドレス" type="email" name="mail" id="mail" placeholder="exsample@rikushop.com" :error="errors.email" />
+                <TextInput v-model="password" label="パスワード" type="password" name="password" id="password" :error="errors.password" />
 
                 <div v-if="!isLoginMode">
-                     <TextInput v-model="passwordConfilm" label="パスワード(確認)" type="password" name="passwordConfilm" id="passwordConfilm" />
+                     <TextInput v-model="passwordConfilm" label="パスワード(確認)" type="password" name="passwordConfilm" id="passwordConfilm" :error="errors.passwordConfilm"/>
                 </div>
-                <div class="md:px-18.5">
+                <div class="md:px-18.5" @click.capture="handleSubmitClick">
                     <SubmitButton 
                         :value= "isLoginMode ? 'ログイン' : 'アカウントを作成'" 
                         :url="isLoginMode ? '/auth/login' : '/auth/register'" 
