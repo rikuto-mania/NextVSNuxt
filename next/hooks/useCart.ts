@@ -23,6 +23,13 @@ interface Product{
     price:number;
     created_at:Date;
     updated_at:Date;
+     Image: {
+        id: number;
+        productId: number;
+        img_path: string;
+        created_at: string;
+        updated_at: string;
+    }[];
 }
 
 export default function useCart(){

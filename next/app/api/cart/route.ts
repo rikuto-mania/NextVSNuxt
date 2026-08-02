@@ -19,7 +19,13 @@ export async function GET(req:NextRequest) {
             const result = await prisma.cart_item.findMany({
                 where:{cartId:cart.id},
                 include:{
-                    Product:true,
+                    Product:{
+                        include:{
+                            Image:{
+                                take:1,
+                            }
+                        }
+                    }
                 }
             })
 

@@ -14,7 +14,13 @@ export default defineEventHandler(async(event)=>{
         const cartItems = await prisma.cart_item.findMany({
             where: {cartId:cart.id},
             include:{
-                product:true
+                product:{
+                    include:{
+                        image:{
+                            take:1,
+                        }
+                    }
+                }
             }
         })
 

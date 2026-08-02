@@ -16,8 +16,16 @@ interface Cart{
         name:string;
         price:number;
         created_at:Date;
+        image: {
+            id: number;
+            productId: number;
+            img_path: string;
+            created_at: string;
+            updated_at: string;
+        }[];
     }
 }
+
 
 export const useCart = async () =>{
     const {data:cartData} = useFetch<CartResponse>('/api/cart',{
