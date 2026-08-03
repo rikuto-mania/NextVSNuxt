@@ -14,14 +14,14 @@ export default function Products(){
     const ITEM_PER_PAGE = 24; 
 
     //useProduct使用
-    const {data:productsData} = useProducts();
+    const {data:productsData,loading:productsLoading} = useProducts();
+    if(productsLoading) return <p>読み込み中...</p>;
     if(!productsData) return <p>商品情報を取得できませんでした</p> 
 
     //ページネーション管理
     const start = (page -1) * ITEM_PER_PAGE; //最初のページ
     const end = start + ITEM_PER_PAGE; //最後ののページ
-    const totalPage = (productsData?.data.length / ITEM_PER_PAGE);　//総ページ数
-
+    const totalPage = (productsData?.data.length / ITEM_PER_PAGE); //総ページ数
 
     return(
         <main>
