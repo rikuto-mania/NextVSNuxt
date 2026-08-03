@@ -43,6 +43,7 @@
                         :id="item.id" 
                         :title="item.product.name" 
                         :price="item.product.price" 
+                        :image="item.product.image?.[0]?.img_path"
                         :quantity="item.quantity" 
                         @deleted="handleDeletedItems"
                         @update-quantity="updateQuantity"

@@ -2,19 +2,26 @@
 
 import { ConfilmProduct } from "@/components/cart/ConfilmProduct"
 import useCart from "@/hooks/useCart";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function ConfilmCart(){
     const {data:cartData,loading:cartLoading,error:cartError} = useCart(); 
 
-
-    if(!cartData?.data) return <p>カートの商品が見つかりませんでした。</p>
-
-
+    
     if(cartLoading) return <p>読み込み中...</p>;
     if(cartError) return <p>エラーが発生しました</p>;
+    if(!cartData?.data) return <p>カートの商品が見つかりませんでした。</p>
+
+     //パンくずリスト
+    const breadcrumb = [
+        { name: 'カート', path: '/cart' },
+        { name: '購入確認', path: `/cart/confilm`},
+    ];
+
     return(
-        <div>
+        <div className="flex-1">
             <section className="max-w-5xl mx-auto px-4 py-10">
+                <Breadcrumb items={breadcrumb} />
                 <div className="pb-8 flex gap-2">
                     <div className="bg-[#FF6A33] w-1 h-auto"></div>
                     <h2 className="text-3xl">購入確認</h2>
@@ -33,6 +40,7 @@ export default function ConfilmCart(){
                                         <ConfilmProduct 
                                             title={item.Product.name}
                                             price={item.Product.price}
+                                            image={item.Product.Image?.[0]?.img_path}
                                             quantity={item.quantity} 
                                         />
                                         {index !== cartData.data.length -1 &&(

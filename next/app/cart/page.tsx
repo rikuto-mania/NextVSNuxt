@@ -35,7 +35,7 @@ export default function Cart(){
     }
 
     return(
-        <div>
+        <div className="flex-1">
             <section className="max-w-5xl mx-auto px-4 py-10">
                  <div className="pb-8 flex gap-2">
                     <div className="bg-[#FF6A33] w-1 h-auto"></div>
@@ -59,6 +59,7 @@ export default function Cart(){
                                                 id={item.id}
                                                 title={item.Product.name}
                                                 price={item.Product.price}
+                                                image={item.Product.Image?.[0]?.img_path}
                                                 quantity={item.quantity}
                                                 onDelete={handleDeletedItems}
                                                 onUpdate={handleUpdateQuantity}

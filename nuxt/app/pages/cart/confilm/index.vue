@@ -1,10 +1,18 @@
 <script lang="ts" setup>
 import ConfilmProduct from '~/components/cart/ConfilmProduct.vue';
     const {cartData} = await useCart();
+
+
+     //パンくずリスト
+    const breadcrumb = [
+        { name: 'カート', path: '/cart' },
+        { name: '購入確認', path: `/cart/confilm`},
+    ];
 </script>
 
 <template>
     <section class="max-w-5xl mx-auto px-4 py-10">
+        <Breadcrumb :items="breadcrumb" />
          <div class="pb-8 flex gap-2">
             <div class="bg-[#FF6A33] w-1 h-auto"></div>
             <h2 class="text-3xl">購入確認</h2>
@@ -18,7 +26,7 @@ import ConfilmProduct from '~/components/cart/ConfilmProduct.vue';
             </div>
             <div v-if="cartData.data" class="flex flex-col xl:w-170">
                 <div  v-for="(item,index) in cartData.data" :key="item.id" class="flex flex-col">
-                    <ConfilmProduct :title="item.product.name" :price="item.product.price" :quantity="item.quantity" />
+                    <ConfilmProduct :title="item.product.name" :price="item.product.price" :quantity="item.quantity":image="item.product.image?.[0]?.img_path"/>
                     <hr v-if="index !== cartData.data.length -1" class="border border-[#BBB7B7] my-6"> 
                 </div>
             </div>
