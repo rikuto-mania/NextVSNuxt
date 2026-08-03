@@ -2,6 +2,7 @@
     import textArea from '~/components/textArea.vue';
     import submitButton from '~/components/submitButton.vue';
     import Breadcrumb from '~/components/Breadcrumb.vue';
+import SectionHeader from '~/components/SectionHeader.vue';
 
     //リクエストデータ
     const level = ref(5);
@@ -21,10 +22,7 @@
 <template>
     <section class="px-4 py-10 max-w-4xl mx-auto">
         <Breadcrumb :items="breadcrumb"/>
-        <div  class="pb-8 flex gap-2">
-            <div class="bg-[#FF6A33] w-1 h-auto"></div>
-            <p class="text-3xl">レビューを投稿</p>   
-        </div>
+        <SectionHeader title="レビュー投稿" />
         <div>
             <p>評価</p>
             <div class="flex flex-row">

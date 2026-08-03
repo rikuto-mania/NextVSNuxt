@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import type {Products} from '~/../types/index'
+import SectionHeader from '~/components/SectionHeader.vue';
     const pieces = Array.from({length: 99},(_,i) => i +1);
     const route = useRoute();
     const id = Number(route.params.id);
@@ -98,28 +99,23 @@
     </section>
 
     <section v-if="reviewdata?.reviews" class="px-4 xl:px-11 py-10">
-        <div  class="pb-8 flex gap-2">
-            <div class="bg-[#FF6A33] w-1 h-auto"></div>
-            <p class="text-3xl">{{reviewdata.reviews.length}}<span>件のレビュー</span></p>
-        </div>
-
-      <div v-if="reviewdata.reviews.length > 0" class="pb-8">
-        <div v-for="rating in [5,4,3,2,1]" class="flex items-center pb-2">
-            <Icon v-for="n in 5" :name="n <= rating ? 'material-symbols:star-rounded' :'material-symbols:star-outline-rounded'" style="color: gold" size="36px" class=""/>    
-            <div class="flex items-center gap-4">
-                <div class="w-64 h-2 bg-gray-400">
-                    <div class="h-2 bg-[#FF6A33]" :style="{width:getParcentage(rating) + '%'}"></div>
+        <SectionHeader :title="`${reviewdata.reviews.length}件のレビュー`" />
+        <div v-if="reviewdata.reviews.length > 0" class="pb-8">
+            <div v-for="rating in [5,4,3,2,1]" class="flex items-center pb-2">
+                <Icon v-for="n in 5" :name="n <= rating ? 'material-symbols:star-rounded' :'material-symbols:star-outline-rounded'" style="color: gold" size="36px" class=""/>    
+                <div class="flex items-center gap-4">
+                    <div class="w-64 h-2 bg-gray-400">
+                        <div class="h-2 bg-[#FF6A33]" :style="{width:getParcentage(rating) + '%'}"></div>
+                    </div>
+                    <p class=" text-gray-500">{{reviewdata.reviewCount?.[rating]}}</p>
                 </div>
-                <p class=" text-gray-500">{{reviewdata.reviewCount?.[rating]}}</p>
             </div>
+            <NuxtLink :to="`/products/${id}/review`">
+                <button class="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33] mt-5">レビューを投稿する</button>
+            </NuxtLink>
         </div>
-            
-         <NuxtLink :to="`/products/${id}/review`">
-             <button class="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33] mt-5">レビューを投稿する</button>
-         </NuxtLink>
-      </div>
         <hr class="border border-[#BBB7B7]"> 
-      
+    
         <div v-for="reviews in reviewdata.reviews" :key="reviews.id">
             <div class="py-4">
                 <p class="font-semibold">{{reviews.user.username}}</p>
@@ -133,7 +129,7 @@
         <div v-if="reviewdata.reviews.length === 0" class="flex flex-col justify-center items-center">
             <p class="text-center py-6">レビューがまだありません...</p>
             <NuxtLink :to="`/products/${id}/review`">
-             <button class="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33]">レビューを投稿する</button>
+            <button class="w-full lg:w-3xs py-2.5 text-white bg-[#FF6A33]">レビューを投稿する</button>
             </NuxtLink>
         </div>
     </section>

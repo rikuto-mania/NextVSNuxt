@@ -1,5 +1,6 @@
 <script lang="ts" setup>
     import CartProduct from '~/components/cart/CartProduct.vue';
+import SectionHeader from '~/components/SectionHeader.vue';
     const {cartData} = await useCart();
 
     //商品削除
@@ -22,11 +23,7 @@
 
 <template>
     <section class="max-w-5xl mx-auto px-4 py-10">
-         <div class="pb-8 flex gap-2">
-            <div class="bg-[#FF6A33] w-1 h-auto"></div>
-            <h2 class="text-3xl">あなたのカート</h2>
-        </div>
-
+        <SectionHeader title="あなたのカート" />
         <div v-if="cartData?.data.length" class="flex gap-28.5 flex-col lg:flex-row-reverse justify-between">
             <div>
                 <p>合計金額</p>

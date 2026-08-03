@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import type {Products} from '~/../types/index'
-
   import { ref } from 'vue';
-  import { useProducts } from '#imports';
+  import SectionHeader from '~/components/SectionHeader.vue';
 
   //ダミー背景用カラー配列
   const slider = [
@@ -49,12 +48,8 @@
       </div>
 
       <section class="xl:max-w-5xl mx-auto px-4 py-16">
-        <div class="pb-8">
-          <p class="text-3xl">新しい商品</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 pb-10 items-center">
-          
+        <SectionHeader title="新しい商品" />
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 mb-10">
           <ProductCard
           v-for="products in data"
           :to="`/products/${products.id}`"
@@ -63,7 +58,6 @@
           :price="products.price" 
           :reviews="products._count.review" />
         </div>
-
         <div class="flex justify-center"> 
           <NuxtLink to="/products" class="text-white text-center bg-[#FF6A33] px-8 py-2.5">もっと見る</NuxtLink>
         </div>

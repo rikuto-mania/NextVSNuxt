@@ -13,11 +13,7 @@ import ConfilmProduct from '~/components/cart/ConfilmProduct.vue';
 <template>
     <section class="max-w-5xl mx-auto px-4 py-10">
         <Breadcrumb :items="breadcrumb" />
-         <div class="pb-8 flex gap-2">
-            <div class="bg-[#FF6A33] w-1 h-auto"></div>
-            <h2 class="text-3xl">購入確認</h2>
-        </div>
-
+        <SectionHeader title="購入確認" />
         <div v-if="cartData?.data" class="flex gap-28.5 flex-col lg:flex-row-reverse justify-between">
             <div>
                 <p>合計金額</p>
