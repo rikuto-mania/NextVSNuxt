@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import { useState } from "react";
+import SectionHeader from "@/components/common/SectionHeader";
+
 
 export default function Products(){
     const [page,setPage] = useState(1);
@@ -24,6 +26,7 @@ export default function Products(){
     return(
         <main>
             <div className="xl:max-w-5xl px-4 py-16 mx-auto">
+                <SectionHeader title="商品一覧" />
                 <section className="grid sm:grid-cols-3 lg:grid-cols-4 grid-cols-1 gap-4 ">
                     {productsData?.data.slice(start,end).map((product) =>{
                         return(
@@ -33,8 +36,6 @@ export default function Products(){
                         )
                     })}
                 </section>
-                
-
                 <section className="relative py-4">
                     {!(page === 1) && 
                         <Link href={`products?page=${page}`} className=" absolute left-0">

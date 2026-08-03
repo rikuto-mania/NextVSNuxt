@@ -3,8 +3,9 @@
 import Link from "next/link"
 import useCart from "@/hooks/useCart";
 import { CartProduct } from "@/components/cart/cartProduct"
-
+import SectionHeader from "@/components/common/SectionHeader";
 import { useEffect, useState } from "react";
+
 export default function Cart(){
     const {data:cartData,loading:cartLoading,error:cartError} = useCart(); 
     const [cartItems,setCartItems] = useState(cartData?.data ?? []);
@@ -37,10 +38,7 @@ export default function Cart(){
     return(
         <div className="flex-1">
             <section className="max-w-5xl mx-auto px-4 py-10">
-                 <div className="pb-8 flex gap-2">
-                    <div className="bg-[#FF6A33] w-1 h-auto"></div>
-                    <h2 className="text-3xl">あなたのカート</h2>
-                </div>
+                <SectionHeader title="あなたのカート" />
                     {cartData?.data ? (
                         <div className="flex gap-28.5 flex-col lg:flex-row-reverse justify-between">
                             <div>

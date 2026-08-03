@@ -3,11 +3,12 @@
 import { ConfilmProduct } from "@/components/cart/ConfilmProduct"
 import useCart from "@/hooks/useCart";
 import Breadcrumb from "@/components/Breadcrumb";
+import SectionHeader from "@/components/common/SectionHeader";
 
 export default function ConfilmCart(){
     const {data:cartData,loading:cartLoading,error:cartError} = useCart(); 
 
-    
+
     if(cartLoading) return <p>読み込み中...</p>;
     if(cartError) return <p>エラーが発生しました</p>;
     if(!cartData?.data) return <p>カートの商品が見つかりませんでした。</p>
@@ -22,10 +23,7 @@ export default function ConfilmCart(){
         <div className="flex-1">
             <section className="max-w-5xl mx-auto px-4 py-10">
                 <Breadcrumb items={breadcrumb} />
-                <div className="pb-8 flex gap-2">
-                    <div className="bg-[#FF6A33] w-1 h-auto"></div>
-                    <h2 className="text-3xl">購入確認</h2>
-                </div>
+                <SectionHeader title="購入確認" />
                 {cartData.data &&(
                     <div className="flex gap-28.5 flex-col lg:flex-row-reverse justify-between">
                         <div>

@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import useApi from "@/hooks/useApi";
+import SectionHeader from "@/components/common/SectionHeader";
 
 export default function Review(){
     //レビュー状態管理
@@ -43,10 +44,7 @@ export default function Review(){
         <main>
             <section className="px-4 py-10 max-w-4xl mx-auto">
                 <Breadcrumb items={breadcrumb} />
-                <div  className="pb-8 flex gap-2">
-                    <div className="bg-[#FF6A33] w-1 h-auto"></div>
-                    <p className="text-3xl">レビューを投稿</p>   
-                </div>
+                <SectionHeader title="レビューを投稿" />
                 <form onSubmit={handleSubmit}>
                     <div>
                         <p>評価</p>

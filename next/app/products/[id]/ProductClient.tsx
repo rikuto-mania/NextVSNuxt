@@ -7,6 +7,7 @@ import { productResponse,reviewResponse } from "@/types/api";
 import { Icon } from "@iconify/react";
 import Breadcrumb from "@/components/Breadcrumb";
 import useApi from "@/hooks/useApi";
+import SectionHeader from "@/components/common/SectionHeader";
 
 type Props = {
     productData:productResponse;
@@ -113,10 +114,7 @@ export default function({productData, reviewData}:Props){
             </section>
 
             <section className="px-4 xl:px-11 py-10">
-                <div className="pb-8 flex gap-2">
-                    <div className="bg-[#FF6A33] w-1 h-auto"></div>
-                    <p className="text-3xl">{reviews.allReviews.length}件のレビュー</p>
-                </div>
+                <SectionHeader title={`${reviews.allReviews.length}件のレビュー`} />
                 {reviews.allReviews.length > 0 &&(
                     <div className="pb-8">
                         {rawLevels.map((level) =>(
