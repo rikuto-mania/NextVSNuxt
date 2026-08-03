@@ -13,10 +13,8 @@ export async function GET(req:NextRequest) {
             const cart = await prisma.cart.findFirst({
                 where:dbUserid ? {userId:dbUserid} : {sessionId:dbSessionId}
             });
-
-            if(!cart) return  NextResponse.json({status:"error",code:404,message:"カートがみつかりませんでした"},{status:404});
-
-            const result = await prisma.cart_item.findMany({
+            
+            const result = cart ?  await prisma.cart_item.findMany({
                 where:{cartId:cart.id},
                 include:{
                     Product:{
@@ -27,7 +25,7 @@ export async function GET(req:NextRequest) {
                         }
                     }
                 }
-            })
+            }) :[];
 
             return NextResponse.json({status:"success",code:200,data:result},{status:200})
         }catch(err){

@@ -9,9 +9,8 @@ export default defineEventHandler(async(event)=>{
             where: dbUserid ? {userId:dbUserid} : {sessionId:dbSessionId}
         });
 
-        if(!cart) throw createError({statusCode:404,statusMessage:"カートが見つかりませんでした"});
 
-        const cartItems = await prisma.cart_item.findMany({
+        const cartItems = cart ? await prisma.cart_item.findMany({
             where: {cartId:cart.id},
             include:{
                 product:{
@@ -22,7 +21,7 @@ export default defineEventHandler(async(event)=>{
                     }
                 }
             }
-        })
+        }) : [];
 
         return {statusCode:200,message:"カート情報を取得しました",data:cartItems}
 

@@ -39,7 +39,7 @@ export default function Cart(){
         <div className="flex-1">
             <section className="max-w-5xl mx-auto px-4 py-10">
                 <SectionHeader title="あなたのカート" />
-                    {cartData?.data ? (
+                    {cartItems.length > 0 ? (
                         <div className="flex gap-28.5 flex-col lg:flex-row-reverse justify-between">
                             <div>
                                 <p>合計金額</p>
@@ -62,7 +62,7 @@ export default function Cart(){
                                                 onDelete={handleDeletedItems}
                                                 onUpdate={handleUpdateQuantity}
                                             />
-                                            {index !== cartData.data.length -1 && (
+                                            {index !== cartItems.length -1 && (
                                                 <hr className="border border-[#BBB7B7] my-6" /> 
                                             )}
                                         </div>
